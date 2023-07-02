@@ -32,7 +32,7 @@ public class Reply extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean deleted = false;
 
-    public Reply(Board board, User user, String content, boolean deleted) {
+    public Reply(Board board, User user, String content) {
         this.board = board;
         this.user = user;
         this.content = content;

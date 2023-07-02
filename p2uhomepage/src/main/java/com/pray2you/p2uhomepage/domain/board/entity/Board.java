@@ -15,7 +15,7 @@ public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "board_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

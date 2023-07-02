@@ -27,8 +27,7 @@ public class Attendance {
     @CreatedDate
     private LocalDateTime createDate;
 
-    public Attendance(User user, LocalDateTime createDate) {
+    public Attendance(User user) {
         this.user = user;
-        this.createDate = createDate;
     }
 }

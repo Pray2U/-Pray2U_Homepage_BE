@@ -40,7 +40,7 @@ public class User extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public User(String githubId, String username, String profileImgUrl, String phoneNumber, String email, Role role, boolean deleted) {
+    public User(String githubId, String username, String profileImgUrl, String phoneNumber, String email, Role role) {
         this.githubId = githubId;
         this.username = username;
         this.profileImgUrl = profileImgUrl;

@@ -1,6 +1,7 @@
 package com.pray2you.p2uhomepage.domain.item.entity;
 
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,8 +32,8 @@ public class Item extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean deleted = false;
 
-    public Item(long id, String itemName, String imgUrl, long point, String itemDescription) {
-        this.id = id;
+    @Builder
+    public Item(String itemName, String imgUrl, long point, String itemDescription) {
         this.itemName = itemName;
         this.imgUrl = imgUrl;
         this.point = point;

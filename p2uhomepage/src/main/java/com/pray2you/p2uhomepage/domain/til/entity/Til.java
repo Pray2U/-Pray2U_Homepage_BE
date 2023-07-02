@@ -2,6 +2,7 @@ package com.pray2you.p2uhomepage.domain.til.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,7 +34,8 @@ public class Til extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean deleted = false;
 
-    public Til(User user, String title, String tag, String content, boolean deleted) {
+    @Builder
+    public Til(User user, String title, String tag, String content) {
         this.user = user;
         this.title = title;
         this.tag = tag;
