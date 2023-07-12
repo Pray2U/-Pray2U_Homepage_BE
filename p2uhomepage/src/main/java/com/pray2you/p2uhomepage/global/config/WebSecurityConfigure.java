@@ -2,6 +2,8 @@ package com.pray2you.p2uhomepage.global.config;
 
 import com.pray2you.p2uhomepage.global.security.handler.OAuth2AuthenticationFailureHandler;
 import com.pray2you.p2uhomepage.global.security.handler.OAuth2AuthenticationSuccessHandler;
+import com.pray2you.p2uhomepage.global.security.jwt.JwtAccessDeniedHandler;
+import com.pray2you.p2uhomepage.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtAuthenticationFilter;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;
 import com.pray2you.p2uhomepage.global.security.repository.CookieAuthorizationRequestRepository;
@@ -23,6 +25,8 @@ public class WebSecurityConfigure {
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -53,9 +57,9 @@ public class WebSecurityConfigure {
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
 
-        http.logout()
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID");
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler);
 
         //jwt filter 설정
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

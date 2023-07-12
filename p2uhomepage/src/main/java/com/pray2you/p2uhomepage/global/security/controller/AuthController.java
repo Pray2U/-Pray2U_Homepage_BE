@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -21,7 +22,12 @@ public class AuthController {
 
     @PostMapping("/api/auth/refresh")
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, String> accessToken){
-        log.info("refreshToken 요청" + accessToken.get("accessToken"));
-        return ResponseEntity.ok().body(authService.refreshToken(request, response, accessToken.get("accessToken")));
+
+        String token = authService.refreshToken(request, response, accessToken.get("accessToken"));
+        Map<String , Object> result = new HashMap<>();
+        result.put("msg","토큰 갱신에 성공했습니다.");
+        result.put("data", token);
+
+        return ResponseEntity.ok().body(result);
     }
 }

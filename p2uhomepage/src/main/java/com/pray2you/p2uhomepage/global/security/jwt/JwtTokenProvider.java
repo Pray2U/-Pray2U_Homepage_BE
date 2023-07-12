@@ -7,7 +7,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,13 +31,12 @@ public class JwtTokenProvider {
     private final Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60; // 1시간
     private final Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60 * 24 * 7; // 1주일
     private final String AUTHORITIES_KEY = "role";
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
-
-    public JwtTokenProvider(@Value("${app.auth.token.secret-key}") String secretKey, @Value("${app.auth.token.refresh-cookie-key}")String cookieKey) {
+    public JwtTokenProvider(@Value("${app.auth.token.secret-key}") String secretKey, @Value("${app.auth.token.refresh-cookie-key}")String cookieKey, RefreshTokenRepository refreshTokenRepository) {
         this.SECRET_KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         this.COOKIE_REFRESH_TOKEN_KEY = cookieKey;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     public String createAccessToken(Authentication authentication) {

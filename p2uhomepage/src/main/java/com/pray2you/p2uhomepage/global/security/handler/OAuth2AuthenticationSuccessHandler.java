@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,12 +51,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new BadRequestException("redirect URIs are not matched");
         }
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-        log.info("토큰생성시도");
-        //JWT생성
         String accessToken = tokenProvider.createAccessToken(authentication);
 
         tokenProvider.createRefreshToken(authentication, response);
-        log.info("토큰생성완료");
+
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("accessToken", accessToken)
                 .build().toUriString();
