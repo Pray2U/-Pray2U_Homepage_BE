@@ -52,12 +52,6 @@ public class User extends BaseTimeEntity {
     public User update(User updateUser) {
         this.githubId = updateUser.githubId;
         this.username = updateUser.username;
-        this.profileImgUrl = updateUser.profileImgUrl;
-        this.phoneNumber = updateUser.phoneNumber;
-        this.email = updateUser.email;
-        this.role = updateUser.role;
-        this.deleted = updateUser.deleted;
-
         return this;
     }
 }

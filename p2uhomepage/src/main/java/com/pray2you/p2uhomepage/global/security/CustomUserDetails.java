@@ -1,5 +1,6 @@
 package com.pray2you.p2uhomepage.global.security;
 
+import com.pray2you.p2uhomepage.domain.model.Role;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +27,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     }
 
     public static CustomUserDetails create(User user) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getRole()));
 
         return new CustomUserDetails(user.getId(), user.getGithubId(), authorities);
     }
