@@ -48,4 +48,10 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.role = role;
     }
+
+    public User update(User updateUser) {
+        this.githubId = updateUser.githubId;
+        this.username = updateUser.username;
+        return this;
+    }
 }
