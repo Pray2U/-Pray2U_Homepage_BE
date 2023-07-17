@@ -1,6 +1,7 @@
 package com.pray2you.p2uhomepage.global.security.handler;
 
-import com.pray2you.p2uhomepage.global.exception.BadRequestException;
+import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;
 import com.pray2you.p2uhomepage.global.security.repository.CookieAuthorizationRequestRepository;
 import com.pray2you.p2uhomepage.global.security.util.CookieUtil;
@@ -48,7 +49,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .map(Cookie::getValue);
 
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new BadRequestException("redirect URIs are not matched");
+            throw new RestApiException(UserErrorCode.NOT_MATCHED_REDIRECT_URI);
         }
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
         String accessToken = tokenProvider.createAccessToken(authentication);
