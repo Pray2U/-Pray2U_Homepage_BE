@@ -38,6 +38,7 @@ jobs:
           mysql user: "${{secrets.DB_USER}}"
           mysql password: "${{secrets.PASSWORD}}"
           
+          
       - name: Create Spring Properties
         run: |
           cd p2uhomepage/src/main/resources
