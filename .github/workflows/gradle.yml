@@ -43,7 +43,7 @@ jobs:
         run: |
           cd p2uhomepage/src/main/resources
           touch ./application.properties 
-          echo "${{secrets.APPLICATION_PROPERTIES}}" > p2uhomepage/src/main/resources/application.properties
+          echo "${{secrets.APPLICATION_PROPERTIES}}" > ./application.properties
 
     
 
