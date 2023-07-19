@@ -36,7 +36,7 @@ jobs:
           character set server: 'utf8'
           mysql database: 'pray2you'
           mysql user: 'root'
-          mysql password: 'pdw06135@'
+          mysql password: '1234'
           
           
       - name: Create Spring Properties
