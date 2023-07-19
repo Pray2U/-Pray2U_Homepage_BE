@@ -30,14 +30,13 @@ jobs:
           distribution: 'temurin'
           
           
-  ## create application-database.yaml
-      - name: make application-database.yaml
-        run: |
-          cd p2uhomepage/src/main/resources
-          touch ./application-database.yaml
-          echo "${{ secrets.DATABASE }}" >> ./application-database.yaml
-        shell: bash
-          
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: "${{secrets.DB_NAME}}"
+          mysql user: "${{secrets.DB_USER}}"
+          mysql password: "${{secrets.PASSWORD}}"
           
       - name: Create Spring Properties
         run: |
