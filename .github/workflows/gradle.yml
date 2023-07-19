@@ -28,6 +28,22 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          
+          
+  ## create application-database.yaml
+      - name: make application-database.yaml
+        run: |
+          cd p2uhomepage/src/main/resources
+          touch ./application-database.yaml
+          echo "${{ secrets.DATABASE }}" >> ./application-database.yaml
+        shell: bash
+          
+          
+      - name: Create Spring Properties
+        run: |
+          cd p2uhomepage/src/main/resources
+          touch ./application.properties 
+          echo "${{secrets.APPLICATION_PROPERTIES}}" > p2uhomepage/src/main/resources/application.properties
 
     
 
