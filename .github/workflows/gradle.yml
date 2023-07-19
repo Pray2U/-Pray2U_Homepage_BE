@@ -34,9 +34,9 @@ jobs:
         uses: samin/mysql-action@v1
         with:
           character set server: 'utf8'
-          mysql database: "${{secrets.DB_NAME}}"
-          mysql user: "${{secrets.DB_USER}}"
-          mysql password: "${{secrets.PASSWORD}}"
+          mysql database: 'pray2you'
+          mysql user: 'root'
+          mysql password: 'pdw06135@'
           
           
       - name: Create Spring Properties
