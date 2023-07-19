@@ -38,7 +38,7 @@ jobs:
         run: chmod +x ./p2uhomepage/gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./p2uhomepage/gradlew clean build
 
       - name: Temporarily save build artifact
         uses: actions/upload-artifact@v3
