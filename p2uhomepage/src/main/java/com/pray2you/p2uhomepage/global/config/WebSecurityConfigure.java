@@ -41,6 +41,8 @@ public class WebSecurityConfigure {
 
         //요청에 대한 권한 설정
         http.authorizeRequests()
+//                .antMatchers("/api/admin/**").hasRole("ADMIN")
+//                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
 

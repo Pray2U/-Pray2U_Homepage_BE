@@ -2,13 +2,14 @@ package com.pray2you.p2uhomepage.domain.memberapproval.entity;
 
 import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class MemberApproval extends BaseTimeEntity {
 
@@ -30,5 +31,13 @@ public class MemberApproval extends BaseTimeEntity {
         this.githubId = githubId;
         this.username = username;
         this.status = status;
+    }
+
+    public void delete(){
+        this.status = ApprovalStatus.DELETED;
+    }
+
+    public void create(){
+        this.status = ApprovalStatus.APPROVED;
     }
 }
