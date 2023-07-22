@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum ApprovalStatus {
 
         APPROVED("APPROVED"),
-        JOINED("JOINED");
+        JOINED("JOINED"),
+        DELETED("DELETED")
+        ;
 
         String status;
 

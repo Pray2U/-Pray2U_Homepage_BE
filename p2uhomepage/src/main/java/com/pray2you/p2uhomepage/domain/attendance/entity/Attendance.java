@@ -1,6 +1,7 @@
 package com.pray2you.p2uhomepage.domain.attendance.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Attendance {
 

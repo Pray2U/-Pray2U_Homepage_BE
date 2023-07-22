@@ -3,6 +3,7 @@ package com.pray2you.p2uhomepage.domain.order.entity;
 import com.pray2you.p2uhomepage.domain.item.entity.Item;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "`order`")
 public class Order extends BaseTimeEntity {
