@@ -63,7 +63,8 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           dir
           cd p2uhomepage
-          docker build -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
+          docker push ${{ secrets.DOCKER_REPO }}/pray2u-back 
       
 
       ## docker compose up
@@ -79,6 +80,5 @@ jobs:
             cd Pray2U_Homepage_BE
             cd p2uhomepage
             docker rm -f $(docker ps -qa)
-            docker pull ${{ secrets.DOCKER_REPO }}/pray2u-back
             docker-compose up -d
             docker image prune -f
