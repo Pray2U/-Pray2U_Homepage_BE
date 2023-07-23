@@ -37,6 +37,10 @@ jobs:
           dir
           cd p2uhomepage
           dir
+          cd src
+          dir
+          cd main 
+          dir
           
           
 
