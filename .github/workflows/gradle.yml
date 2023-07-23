@@ -34,13 +34,13 @@ jobs:
           
       - name: Create Spring Properties
         run: |
-          dir
           cd p2uhomepage
-          dir
           cd src
-          dir
           cd main 
+          cd resources
+          echo "${{secrets.APPLICATION_PROPERTIES}}" > application.properties
           dir
+          
           
           
 
