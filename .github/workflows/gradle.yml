@@ -34,6 +34,7 @@ jobs:
           
       - name: Create Spring Properties
         run: |
+          cd /
           cd p2uhomepage/src/main/resources
           fsutil file createnew application.properties 
           echo "${{secrets.APPLICATION_PROPERTIES}}" > application.properties
