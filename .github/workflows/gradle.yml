@@ -35,15 +35,10 @@ jobs:
       - name: Create Spring Properties
         run: |
           cd p2uhomepage/src/main/resources
-          touch ./application.properties 
-          echo "${{secrets.APPLICATION_PROPERTIES}}" > ./application.properties
+          fsutil file createnew application.properties 
+          echo "${{secrets.APPLICATION_PROPERTIES}}" > application.properties
           
           
-
-    
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./p2uhomepage/gradlew
 
       - name: Build with Gradle
         run:  |
@@ -76,7 +71,7 @@ jobs:
           script: |
             cd Pray2U_Homepage_BE
             cd p2uhomepage
-            sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_REPO }}/second-eyes-web
+            docker rm -f $(docker ps -qa)
+            docker pull ${{ secrets.DOCKER_REPO }}/pray2u-back
             docker-compose up -d
             docker image prune -f
