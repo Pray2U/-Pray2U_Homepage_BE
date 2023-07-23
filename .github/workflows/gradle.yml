@@ -30,12 +30,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           
-      - name: executing remote ssh commands using password
-        run: |
-          ssh ${{secrets.USERNAME}}@${{ secrets.HOST }}
-          ${{secrets.PASSWORD}}
-          dir
-          
+    
         
           
           
@@ -74,5 +69,16 @@ jobs:
       
 
       ## docker compose up
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Execute remote SSH commands
+        run: |
+          # SSH를 사용하여 원격 호스트에 접속하여 명령을 실행
+          # 원격 호스트, 사용자 이름 등을 적절히 설정하세요
+          ssh -o StrictHostKeyChecking=no -i $SSH_KEY_PATH ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
 
      
