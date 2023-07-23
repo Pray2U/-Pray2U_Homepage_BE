@@ -30,6 +30,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           
+      - name: executing remote ssh commands using password
+        run: |
+          ssh ${{secrets.USERNAME}}@${{ secrets.HOST }}
+          ${{secrets.PASSWORD}}
+          dir
+          
         
           
           
@@ -69,16 +75,4 @@ jobs:
 
       ## docker compose up
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{secrets.USERNAME}}
-          password: ${{secrets.PASSWORD}}
-          port: ${{secrets.PORT}}
-          script: |
-            cd Pray2U_Homepage_BE
-            cd p2uhomepage
-            docker rm -f $(docker ps -qa)
-            docker-compose up -d
-            docker image prune -f
+     
