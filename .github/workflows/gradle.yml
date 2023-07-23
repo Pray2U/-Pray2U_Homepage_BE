@@ -60,8 +60,8 @@ jobs:
       ## 웹 이미지 빌드 및 도커허브에 push
       - name: web docker build and push
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" > dockerpassword.txt
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          dir
           docker build -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
       
 
