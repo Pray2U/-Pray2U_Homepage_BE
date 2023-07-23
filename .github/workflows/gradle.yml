@@ -34,7 +34,8 @@ jobs:
           
       - name: Create Spring Properties
         run: |
-          cd p2uhomepage/src/main/resoures
+          dir
+          cd p2uhomepage
           dir
           
           
