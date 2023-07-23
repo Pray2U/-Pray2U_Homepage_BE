@@ -62,6 +62,7 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           dir
+          cd p2uhomepage
           docker build -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
       
 
