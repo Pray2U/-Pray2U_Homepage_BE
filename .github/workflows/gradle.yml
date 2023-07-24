@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout
@@ -36,12 +36,10 @@ jobs:
           
       - name: Create Spring Properties
         run: |
-          cd p2uhomepage
-          cd src
-          cd main 
-          cd resources
-          echo "${{secrets.APPLICATION_PROPERTIES}}" > application.properties
-          dir
+         ls
+         touch p2uhomepage/src/main/resources/application.properties 
+         echo "${{secrets.APPLICATION_PROPERTIES}}" > p2uhomepage/src/main/resources/application.properties
+         ls
           
           
           
@@ -62,23 +60,25 @@ jobs:
       - name: web docker build and push
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          dir
+          ls
           cd p2uhomepage
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
           docker push ${{ secrets.DOCKER_REPO }}/pray2u-back 
       
 
       ## docker compose up
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.1
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          host: ${{ secrets.HOST }}
+          username: ${{secrets.USERNAME}}
+          key: ${{ secrets.KEY }}
+          script: |
+            sudo docker rm -f $(docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/pray2u-back
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/pray2u-nginx-window
+            docker-compose up -d
+            docker image prune -f
 
-      - name: Execute remote SSH commands
-        run: |
-          # SSH를 사용하여 원격 호스트에 접속하여 명령을 실행
-          # 원격 호스트, 사용자 이름 등을 적절히 설정하세요
-          ssh -o StrictHostKeyChecking=no -i $SSH_KEY_PATH ${{ secrets.USERNAME }}@${{ secrets.HOST }} 
 
      
