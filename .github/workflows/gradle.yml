@@ -37,9 +37,13 @@ jobs:
       - name: Create Spring Properties
         run: |
          ls
-         touch p2uhomepage/src/main/resources/application.properties 
-         echo "${{secrets.APPLICATION_PROPERTIES}}" > p2uhomepage/src/main/resources/application.properties
+         cd p2uhomepage
          ls
+         cd src
+         ls
+         cd main
+         ls
+        
           
           
           
