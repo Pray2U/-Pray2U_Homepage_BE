@@ -74,7 +74,6 @@ jobs:
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/pray2u .
           docker push ${{ secrets.DOCKER_REPO }}/pray2u 
       
-
       ## docker compose up
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
