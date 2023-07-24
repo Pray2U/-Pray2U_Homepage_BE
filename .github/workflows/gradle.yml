@@ -42,14 +42,15 @@ jobs:
          cd resources
          touch application.properties
          ls
+         echo "${{secrets.APPLICATION_PROPERTIES}}" > application.properties
          
-        
-          
-          
-          
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+            
 
       - name: Build with Gradle
         run:  |
+          ls
           cd p2uhomepage
           ./gradlew clean build
 
