@@ -49,9 +49,8 @@ jobs:
            ls 
            cd p2uhomepage
            chmod +x gradlew
-          
-       
-            
+             
+           
 
       - name: Build with Gradle
         run:  |
