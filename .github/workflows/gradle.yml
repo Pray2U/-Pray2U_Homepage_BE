@@ -88,7 +88,6 @@ jobs:
             ls
             C:\>cd C:\Users\jjong\OneDrive\바탕 화면\p2home\Pray2U_Homepage_BE\p2uhomepage
             docker rm -f $(docker ps -qa)
-            docker pull ${{ secrets.DOCKER_REPO }}/pray2u
             docker-compose up -d
             docker image prune -f
          
