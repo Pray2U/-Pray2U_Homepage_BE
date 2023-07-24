@@ -72,8 +72,8 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ls
           cd p2uhomepage
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/pray2u-back .
-          docker push ${{ secrets.DOCKER_REPO }}/pray2u-back 
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/pray2u .
+          docker push ${{ secrets.DOCKER_REPO }}/pray2u 
       
 
       ## docker compose up
