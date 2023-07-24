@@ -36,13 +36,13 @@ jobs:
           
       - name: Create Spring Properties
         run: |
-         ls
          cd p2uhomepage
-         ls
          cd src
-         ls
          cd main
-         ls
+         cd resources
+          touch p2uhomepage/src/main/resources/application.properties
+          ls
+         
         
           
           
