@@ -40,8 +40,8 @@ jobs:
          cd src
          cd main
          cd resources
-          touch p2uhomepage/src/main/resources/application.properties
-          ls
+         touch application.properties
+         ls
          
         
           
