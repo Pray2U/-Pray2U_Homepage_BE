@@ -24,6 +24,7 @@ public class MemberApproval extends BaseTimeEntity {
     @Column(nullable = false)
     private String username;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private ApprovalStatus status;
 

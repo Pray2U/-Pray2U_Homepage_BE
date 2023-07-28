@@ -34,6 +34,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
@@ -50,9 +51,34 @@ public class User extends BaseTimeEntity {
         this.role = role;
     }
 
-    public User update(User updateUser) {
+    public User updateForOauth(User updateUser) {
         this.githubId = updateUser.githubId;
         this.username = updateUser.username;
+        return this;
+    }
+
+    public User addInformation(String username, String phoneNumber, String email, String profileImgUrl) {
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.profileImgUrl = profileImgUrl;
+        this.role = Role.ROLE_USER;
+        return this;
+    }
+
+    public User delete(){
+        this.deleted = true;
+        return this;
+    }
+
+    public User update(String phoneNumber, String profileImgUrl){
+        this.phoneNumber = phoneNumber;
+        this.profileImgUrl = profileImgUrl;
+        return this;
+    }
+
+    public User updateRole(Role role){
+        this.role = role;
         return this;
     }
 }

@@ -10,15 +10,15 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ReadMemberApprovalResponseDTO {
-    public Long memberApprovalId;
-    public String githubId;
-    public String username;
-    public ApprovalStatus status;
-    public LocalDateTime createdDate;
-    public LocalDateTime modifiedDate;
+    private Long memberApprovalId;
+    private String githubId;
+    private String username;
+    private ApprovalStatus status;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
-    public ReadMemberApprovalResponseDTO(Long memberApprovalId, String githubId, String username, ApprovalStatus status, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private ReadMemberApprovalResponseDTO(Long memberApprovalId, String githubId, String username, ApprovalStatus status, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.memberApprovalId = memberApprovalId;
         this.githubId = githubId;
         this.username = username;
