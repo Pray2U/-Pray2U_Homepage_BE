@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 @Getter
 public class DeleteMemberApprovalResponseDTO {
-    public String githubId;
-    public String username;
-    public ApprovalStatus status;
-    public LocalDateTime createDate;
-    public LocalDateTime deletedDate;
+    private String githubId;
+    private String username;
+    private ApprovalStatus status;
+    private LocalDateTime createDate;
+    private LocalDateTime deletedDate;
 
     @Builder
-    public DeleteMemberApprovalResponseDTO(String githubId, String username, ApprovalStatus status, LocalDateTime createDate, LocalDateTime deletedDate) {
+    private DeleteMemberApprovalResponseDTO(String githubId, String username, ApprovalStatus status, LocalDateTime createDate, LocalDateTime deletedDate) {
         this.githubId = githubId;
         this.username = username;
         this.status = status;

@@ -1,11 +1,10 @@
 package com.pray2you.p2uhomepage.global.security.service;
 
 import com.pray2you.p2uhomepage.domain.memberapproval.repository.MemberApprovalRepository;
+import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
 import com.pray2you.p2uhomepage.domain.model.Role;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.user.repository.UserRepository;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
-import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import com.pray2you.p2uhomepage.global.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
 
         if(!checkMemberApproval(oAuth2User.getAttribute("login"))){
-            throw new OAuth2AuthenticationException("미승인 유저입니다.");
+            throw new OAuth2AuthenticationException("이미 가입되었거나, 미승인 유저입니다.");
         }
 
         User user = saveOrUpdate(oAuth2User);
@@ -43,7 +42,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private boolean checkMemberApproval(String githubId){
-        return memberApprovalRepository.existsByGithubId(githubId);
+        return memberApprovalRepository.existsByGithubIdAndStatus(githubId, ApprovalStatus.APPROVED);
     }
 
     private User saveOrUpdate(OAuth2User oAuth2User){
@@ -57,7 +56,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .build();
 
         User user = userRepository.findByGithubId(oAuthUser.getGithubId())
-                .map(entity -> entity.update(oAuthUser))
+                .map(entity -> entity.updateForOauth(oAuthUser))
                 .orElse(oAuthUser);
 
         return userRepository.save(user);

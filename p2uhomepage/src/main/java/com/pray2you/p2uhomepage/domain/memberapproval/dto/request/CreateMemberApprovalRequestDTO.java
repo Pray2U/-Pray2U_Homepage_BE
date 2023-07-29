@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateMemberApprovalRequestDTO {
-    @NotBlank()
+    @NotBlank
     private String githubId;
     @NotBlank
     private String username;

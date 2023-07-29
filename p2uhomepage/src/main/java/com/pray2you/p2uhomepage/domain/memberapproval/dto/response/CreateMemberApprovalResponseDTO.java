@@ -17,7 +17,7 @@ public class CreateMemberApprovalResponseDTO {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public CreateMemberApprovalResponseDTO(Long memberApprovalId, String githubId, String username, ApprovalStatus status, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CreateMemberApprovalResponseDTO(Long memberApprovalId, String githubId, String username, ApprovalStatus status, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.memberApprovalId = memberApprovalId;
         this.githubId = githubId;
         this.username = username;
