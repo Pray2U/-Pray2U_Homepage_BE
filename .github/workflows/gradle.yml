@@ -31,8 +31,7 @@ jobs:
           distribution: 'temurin'
           
     
-        
-          
+                
           
       - name: Create Spring Properties
         run: |
