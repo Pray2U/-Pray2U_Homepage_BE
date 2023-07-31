@@ -2,6 +2,9 @@ package com.pray2you.p2uhomepage.global.exception;
 
 import com.pray2you.p2uhomepage.global.exception.ErrorCode.CommonErrorCode;
 import com.pray2you.p2uhomepage.global.exception.ErrorCode.ErrorCode;
+import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -82,6 +85,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAllException(Exception ex) {
         log.warn("handleAllException", ex);
         ErrorCode errorCode = CommonErrorCode.INTERNAL_SERVER_ERROR;
+        return handleExceptionInternal(errorCode);
+    }
+
+    @ExceptionHandler({SignatureException.class})
+    public ResponseEntity<Object> handleSignatureException(Exception ex) {
+        ErrorCode errorCode = UserErrorCode.INVALID_TOKEN;
+        return handleExceptionInternal(errorCode);
+    }
+
+    @ExceptionHandler({ExpiredJwtException.class})
+    public ResponseEntity<Object> handleExpiredJwtException(Exception ex) {
+        ErrorCode errorCode = UserErrorCode.EXPIRED_TOKEN_EXCEPTION;
         return handleExceptionInternal(errorCode);
     }
 
