@@ -1,5 +1,6 @@
 package com.pray2you.p2uhomepage.global.security.jwt;
 
+import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.security.CustomUserDetails;
 import com.pray2you.p2uhomepage.global.security.refreshtoken.RefreshToken;
 import com.pray2you.p2uhomepage.global.security.repository.RefreshTokenRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.Arrays;
@@ -98,7 +100,7 @@ public class JwtTokenProvider {
         refreshTokenRepository.save(new RefreshToken(id, refreshToken));
     }
 
-    public Authentication getAuthentication(String accessToken){
+    public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
         Collection<? extends GrantedAuthority> authorities =
@@ -112,16 +114,16 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, HttpServletRequest request) {
         try {
             Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
             return true;
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
-        } catch (UnsupportedJwtException e) {
+            request.setAttribute("exception", UserErrorCode.EXPIRED_TOKEN_EXCEPTION.name());
+        } catch (JwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalStateException e) {
-            log.info("JWT 토큰이 잘못되었습니다");
+            request.setAttribute("exception", UserErrorCode.INVALID_TOKEN.name());
         }
         return false;
     }

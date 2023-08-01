@@ -1,5 +1,6 @@
 package com.pray2you.p2uhomepage.global.security.handler;
 
+import com.pray2you.p2uhomepage.global.exception.ErrorCode.ErrorCode;
 import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;
@@ -49,7 +50,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .map(Cookie::getValue);
 
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new RestApiException(UserErrorCode.NOT_MATCHED_REDIRECT_URI);
+            ErrorCode errorCode = UserErrorCode.NOT_MATCHED_REDIRECT_URI;
+            setResponse(response, errorCode);
         }
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
         String accessToken = tokenProvider.createAccessToken(authentication);
@@ -71,5 +73,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         URI authorizedUri = URI.create(redirectUri);
 
         return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost()) && authorizedUri.getPort() == clientRedirectUri.getPort();
+    }
+
+    private void setResponse(HttpServletResponse response, ErrorCode errorCode) {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        StringBuilder responseJson = new StringBuilder();
+        responseJson.append("{")
+                .append("\"status\": \"").append(errorCode.getHttpStatus()).append("\", ")
+                .append("\"error\": \"").append(errorCode.name()).append("\", ")
+                .append("\"msg\": \"").append(errorCode.getMessage()).append("\"")
+                .append("}");
     }
 }
