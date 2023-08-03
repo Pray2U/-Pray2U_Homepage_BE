@@ -54,7 +54,7 @@ class MemberApprovalServiceTest {
         CreateMemberApprovalResponseDTO responseDTO = CreateMemberApprovalResponseDTO.toDTO(memberApproval);
 
         //given
-        BDDMockito.given(memberApprovalRepository.findByGithubId(any())).willReturn(Optional.of(memberApproval));
+        BDDMockito.given(memberApprovalRepository.findByGithubIdAndStatusNot(any(), any())).willReturn(Optional.empty());
         BDDMockito.given(memberApprovalRepository.save(any())).willReturn(memberApproval);
 
         //when
@@ -76,7 +76,7 @@ class MemberApprovalServiceTest {
         DeleteMemberApprovalResponseDTO responseDTO = DeleteMemberApprovalResponseDTO.toDTO(deletedMemberApproval);
 
         //given
-        BDDMockito.given(memberApprovalRepository.findByGithubId(any())).willReturn(Optional.of(memberApproval));
+        BDDMockito.given(memberApprovalRepository.findByGithubIdAndStatus(any(), any())).willReturn(Optional.of(memberApproval));
 
         BDDMockito.given(memberApprovalRepository.save(any())).willReturn(deletedMemberApproval);
 
@@ -105,7 +105,7 @@ class MemberApprovalServiceTest {
                 .map(ReadMemberApprovalResponseDTO::toDTO);
 
         //given
-        BDDMockito.given(memberApprovalRepository.findAll((Pageable) any())).willReturn(memberApprovalPage);
+        BDDMockito.given(memberApprovalRepository.findByStatusNot(any(), any())).willReturn(memberApprovalPage);
 
 
         //when

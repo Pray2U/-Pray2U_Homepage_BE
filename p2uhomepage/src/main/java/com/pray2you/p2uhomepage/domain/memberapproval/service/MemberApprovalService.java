@@ -24,43 +24,38 @@ public class MemberApprovalService {
 
     public CreateMemberApprovalResponseDTO createMemberApprovals(CreateMemberApprovalRequestDTO requestDTO){
 
-        MemberApproval memberApproval = memberApprovalRepository.findByGithubId(requestDTO.getGithubId())
-                .orElse(requestDTO.toEntity());
+        memberApprovalRepository.findByGithubIdAndStatusNot(requestDTO.getGithubId(), ApprovalStatus.DELETED)
+                .ifPresent(value -> {
+                    throw new RestApiException(UserErrorCode.DUPLICATE_APPROVAL_EXCEPTION); // 값이 있으면 에러를 발생시킴
+                });
 
-        if (memberApproval.getStatus() == ApprovalStatus.JOINED) {
-            throw new RestApiException(UserErrorCode.DUPLICATE_APPROVAL_EXCEPTION);
-        }
-
-        //이미 delete되었던 approval일 경우, 다시 생성
-        memberApproval.create();
-        MemberApproval savedMemberApproval = memberApprovalRepository.save(memberApproval);
+        MemberApproval savedMemberApproval = memberApprovalRepository.save(requestDTO.toEntity());
 
         return CreateMemberApprovalResponseDTO.toDTO(savedMemberApproval);
     }
 
     public DeleteMemberApprovalResponseDTO deleteMemberApprovals(String githubId){
 
-        MemberApproval memberApproval = memberApprovalRepository.findByGithubId(githubId)
+        MemberApproval memberApproval = memberApprovalRepository.findByGithubIdAndStatus(githubId, ApprovalStatus.APPROVED)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_APPROVAL_EXCEPTION));
 
-        if (memberApproval.getStatus() == ApprovalStatus.DELETED) {
-            throw new RestApiException(UserErrorCode.NOT_EXIST_APPROVAL_EXCEPTION);
-        }
-
         //삭제 상태로 변경
-        memberApproval.delete();
+        memberApproval.updateStatus(ApprovalStatus.DELETED);
 
         MemberApproval deletedMemberApproval = memberApprovalRepository.save(memberApproval);
-
         return DeleteMemberApprovalResponseDTO.toDTO(deletedMemberApproval);
     }
 
     public Page<ReadMemberApprovalResponseDTO> getAllMemberApprovals(Pageable pageable){
-        Page<MemberApproval> memberApprovals = memberApprovalRepository.findAll(pageable);
-        log.info("조회완료");
+        Page<MemberApproval> memberApprovals = memberApprovalRepository.findByStatusNot(ApprovalStatus.DELETED, pageable);
         return memberApprovals
                 .map(ReadMemberApprovalResponseDTO::toDTO);
     }
 
-
+    public void updateApprovalStatus(String githubId, ApprovalStatus approvalStatus) {
+        MemberApproval memberApproval = memberApprovalRepository.findByGithubIdAndStatusNot(githubId, ApprovalStatus.DELETED)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_APPROVAL_EXCEPTION));
+        memberApproval.updateStatus(approvalStatus);
+        memberApprovalRepository.save(memberApproval);
+    }
 }

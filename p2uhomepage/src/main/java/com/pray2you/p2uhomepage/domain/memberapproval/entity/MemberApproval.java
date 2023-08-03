@@ -34,11 +34,7 @@ public class MemberApproval extends BaseTimeEntity {
         this.status = status;
     }
 
-    public void delete(){
-        this.status = ApprovalStatus.DELETED;
-    }
-
-    public void create(){
-        this.status = ApprovalStatus.APPROVED;
+    public void updateStatus(ApprovalStatus approvalStatus) {
+        this.status = approvalStatus;
     }
 }
