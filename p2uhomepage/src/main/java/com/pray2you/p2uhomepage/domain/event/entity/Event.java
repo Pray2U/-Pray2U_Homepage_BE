@@ -41,4 +41,15 @@ public class Event extends BaseTimeEntity {
         this.eventEndDate = eventEndDate;
         this.content = content;
     }
+
+    public void updateEvent(String title, LocalDateTime eventStartDate, LocalDateTime eventEndDate, String content) {
+        this.title = title;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.content = content;
+    }
+
+    public void updateDelete(boolean delete) {
+        deleted = delete;
+    }
 }

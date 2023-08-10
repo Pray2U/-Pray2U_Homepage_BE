@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -15,6 +16,7 @@ public class CreateUserByAdditionalInfoRequestDTO {
     @NotBlank
     private String phoneNumber;
     @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String profileImgUrl;
