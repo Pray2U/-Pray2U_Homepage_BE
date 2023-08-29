@@ -8,7 +8,7 @@ import com.pray2you.p2uhomepage.domain.event.dto.response.ReadEventResponseDTO;
 import com.pray2you.p2uhomepage.domain.event.dto.response.UpdateEventResponseDTO;
 import com.pray2you.p2uhomepage.domain.event.entity.Event;
 import com.pray2you.p2uhomepage.domain.event.repository.EventRepository;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

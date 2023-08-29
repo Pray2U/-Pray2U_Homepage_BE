@@ -8,7 +8,7 @@ import com.pray2you.p2uhomepage.domain.user.dto.request.UpdateUserRoleRequestDTO
 import com.pray2you.p2uhomepage.domain.user.dto.response.*;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.user.repository.UserRepository;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

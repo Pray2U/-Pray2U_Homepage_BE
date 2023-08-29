@@ -7,7 +7,7 @@ import com.pray2you.p2uhomepage.domain.memberapproval.dto.response.ReadMemberApp
 import com.pray2you.p2uhomepage.domain.memberapproval.entity.MemberApproval;
 import com.pray2you.p2uhomepage.domain.memberapproval.repository.MemberApprovalRepository;
 import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

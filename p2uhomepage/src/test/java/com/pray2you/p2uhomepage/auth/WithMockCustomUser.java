@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 @WithSecurityContext(factory = WithMockCustomUserSecurityFactory.class)
 public @interface WithMockCustomUser {
-    long userId() default 0L;
+    long userId() default 1L;
     String githubId() default "gildong Hong";
     Role roles() default Role.ROLE_ADMIN;
 }

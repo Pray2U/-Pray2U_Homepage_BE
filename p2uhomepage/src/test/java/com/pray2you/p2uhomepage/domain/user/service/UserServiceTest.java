@@ -1,6 +1,7 @@
 package com.pray2you.p2uhomepage.domain.user.service;
 
 import com.google.gson.Gson;
+import com.pray2you.p2uhomepage.domain.memberapproval.service.MemberApprovalService;
 import com.pray2you.p2uhomepage.domain.model.Role;
 import com.pray2you.p2uhomepage.domain.user.dto.request.CreateUserByAdditionalInfoRequestDTO;
 import com.pray2you.p2uhomepage.domain.user.dto.request.UpdateUserRequestDTO;
@@ -31,6 +32,9 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private MemberApprovalService memberApprovalService;
 
     @InjectMocks
     private UserService userService;
