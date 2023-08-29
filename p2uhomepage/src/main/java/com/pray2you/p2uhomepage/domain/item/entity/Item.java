@@ -40,4 +40,17 @@ public class Item extends BaseTimeEntity {
         this.point = point;
         this.itemDescription = itemDescription;
     }
+
+    public Item delete() {
+        this.deleted = true;
+        return this;
+    }
+
+    public Item update(String itemName, String imgUrl, long point, String itemDescription) {
+        this.itemName = itemName;
+        this.imgUrl = imgUrl;
+        this.point = point;
+        this.itemDescription = itemDescription;
+        return this;
+    }
 }

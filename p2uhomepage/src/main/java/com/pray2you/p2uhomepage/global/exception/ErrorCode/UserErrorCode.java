@@ -18,7 +18,8 @@ public enum UserErrorCode implements ErrorCode {
     DUPLICATE_APPROVAL_EXCEPTION(HttpStatus.CONFLICT, "이미 존재하는 가입승인입니다."),
     NOT_EXIST_APPROVAL_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 가입승인입니다."),
     NOT_EXIST_USER_EXCEPTION(HttpStatus.NOT_FOUND, "해당 유저는 존재하지 않습니다."),
-    NOT_EXIST_EVENT_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이벤트는 존재하지 않습니다.")
+    NOT_EXIST_EVENT_EXCEPTION(HttpStatus.NOT_FOUND, "해당 이벤트는 존재하지 않습니다."),
+    NOT_EXIST_ITEM_EXCEPTION(HttpStatus.NOT_FOUND, "해당 아이템은 존재하지 않습니다.")
     ;
 
     private final HttpStatus httpStatus;

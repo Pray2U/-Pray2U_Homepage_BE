@@ -112,7 +112,7 @@ class EventControllerTest {
     }
 
     @Test
-    @DisplayName("## 멤버 삭제 컨트롤러 테스트 ##")
+    @DisplayName("## 이벤트 삭제 컨트롤러 테스트 ##")
     void deleteEvent() throws Exception {
 
         DeleteEventResponseDTO responseDTO = DeleteEventResponseDTO.builder()
