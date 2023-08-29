@@ -1,4 +1,4 @@
-package com.pray2you.p2uhomepage.global.exception.ErrorCode;
+package com.pray2you.p2uhomepage.global.exception.errorcode;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

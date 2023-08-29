@@ -1,7 +1,7 @@
 package com.pray2you.p2uhomepage.global.security.jwt;
 
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.ErrorCode;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.ErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,6 +1,6 @@
 package com.pray2you.p2uhomepage.global.security.service;
 
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import com.pray2you.p2uhomepage.global.security.CustomUserDetails;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;

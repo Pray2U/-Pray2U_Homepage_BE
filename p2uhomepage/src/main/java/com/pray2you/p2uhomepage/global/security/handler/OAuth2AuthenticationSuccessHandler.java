@@ -1,8 +1,7 @@
 package com.pray2you.p2uhomepage.global.security.handler;
 
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.ErrorCode;
-import com.pray2you.p2uhomepage.global.exception.ErrorCode.UserErrorCode;
-import com.pray2you.p2uhomepage.global.exception.RestApiException;
+import com.pray2you.p2uhomepage.global.exception.errorcode.ErrorCode;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;
 import com.pray2you.p2uhomepage.global.security.repository.CookieAuthorizationRequestRepository;
 import com.pray2you.p2uhomepage.global.security.util.CookieUtil;
@@ -18,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.Optional;
 
@@ -45,13 +45,18 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
+    @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             ErrorCode errorCode = UserErrorCode.NOT_MATCHED_REDIRECT_URI;
-            setResponse(response, errorCode);
+            try {
+                setResponse(response, errorCode);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
         String accessToken = tokenProvider.createAccessToken(authentication);
@@ -75,7 +80,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost()) && authorizedUri.getPort() == clientRedirectUri.getPort();
     }
 
-    private void setResponse(HttpServletResponse response, ErrorCode errorCode) {
+    private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -85,5 +90,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .append("\"error\": \"").append(errorCode.name()).append("\", ")
                 .append("\"msg\": \"").append(errorCode.getMessage()).append("\"")
                 .append("}");
+
+        PrintWriter writer = response.getWriter();
+        writer.println(responseJson);
     }
 }
