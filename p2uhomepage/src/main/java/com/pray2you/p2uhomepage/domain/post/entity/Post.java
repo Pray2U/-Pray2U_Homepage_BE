@@ -1,4 +1,4 @@
-package com.pray2you.p2uhomepage.domain.board.entity;
+package com.pray2you.p2uhomepage.domain.post.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
@@ -12,11 +12,11 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Board extends BaseTimeEntity {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
+    @Column(name = "post_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,10 +36,23 @@ public class Board extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public Board(User user, String title, String content, String fileUrl) {
+    public Post(User user, String title, String content, String fileUrl) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.fileUrl = fileUrl;
+    }
+
+    public Post update(String title, String content, String fileUrl) {
+        this.title = title;
+        this.content = content;
+        this.fileUrl = fileUrl;
+
+        return this;
+    }
+
+    public Post delete() {
+        this.deleted = true;
+        return this;
     }
 }

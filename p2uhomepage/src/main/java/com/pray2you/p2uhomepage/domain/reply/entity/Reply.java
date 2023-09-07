@@ -1,6 +1,6 @@
 package com.pray2you.p2uhomepage.domain.reply.entity;
 
-import com.pray2you.p2uhomepage.domain.board.entity.Board;
+import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ public class Reply extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    private Board board;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -33,8 +33,8 @@ public class Reply extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean deleted = false;
 
-    public Reply(Board board, User user, String content) {
-        this.board = board;
+    public Reply(Post post, User user, String content) {
+        this.post = post;
         this.user = user;
         this.content = content;
     }

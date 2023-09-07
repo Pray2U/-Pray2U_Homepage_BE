@@ -87,5 +87,4 @@ public class UserController {
         result.put("data", responseDTO);
         return ResponseEntity.ok().body(result);
     }
-
 }
