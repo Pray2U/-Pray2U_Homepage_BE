@@ -2,13 +2,14 @@ package com.pray2you.p2uhomepage.domain.post.dto.request;
 
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdatePostRequestDTO {
 
     @NotBlank
