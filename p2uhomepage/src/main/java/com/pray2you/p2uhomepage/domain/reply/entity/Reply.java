@@ -38,4 +38,16 @@ public class Reply extends BaseTimeEntity {
         this.user = user;
         this.content = content;
     }
+
+    public Reply update(String content) {
+        this.content = content;
+
+        return this;
+    }
+
+    public Reply delete() {
+        this.deleted = true;
+
+        return this;
+    }
 }
