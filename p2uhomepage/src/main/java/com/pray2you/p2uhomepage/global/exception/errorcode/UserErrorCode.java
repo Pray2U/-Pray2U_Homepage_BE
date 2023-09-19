@@ -22,6 +22,7 @@ public enum UserErrorCode implements ErrorCode {
     NOT_EXIST_ITEM_EXCEPTION(HttpStatus.NOT_FOUND, "해당 아이템은 존재하지 않습니다."),
     NOT_EXIST_POST_EXCEPTION(HttpStatus.NOT_FOUND, "해당 게시물은 존재하지 않습니다."),
     NOT_EXIST_REPLY_EXCEPTION(HttpStatus.NOT_FOUND, "해당 댓글은 존재하지 않습니다."),
+    NOT_EXIST_TIL_EXCEPTION(HttpStatus.NOT_FOUND, "해당 TIL은 존재하지 않습니다."),
     DUPLICATE_ATTENDANCE_EXCEPTION(HttpStatus.BAD_REQUEST, "이미 출석 완료 처리되었습니다."),
     NOT_MATCH_POST_EXCEPTION(HttpStatus.CONFLICT, "해당 게시물의 댓글이 아닙니다.")
     ;
