@@ -90,7 +90,7 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("## 공지사항 수정 컨트롤러 테스트 ##")
+    @DisplayName("## 공지사항 수정 서비스 테스트 ##")
     void updatePost() {
 
         StringBuilder postUpdateRequestJson = new StringBuilder();
@@ -133,7 +133,7 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("## 공지사항 삭제 컨트롤러 테스트 ##")
+    @DisplayName("## 공지사항 삭제 서비스 테스트 ##")
     void deletePost() {
 
         User user = User.builder()
@@ -167,7 +167,7 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("## 공지사항 조회 컨트롤러 테스트 ##")
+    @DisplayName("## 공지사항 조회 서비스 테스트 ##")
     void readPost() {
 
         User user = User.builder()
@@ -199,7 +199,7 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("## 전체 공지사항 조회 컨트롤러 테스트 ##")
+    @DisplayName("## 전체 공지사항 조회 서비스 테스트 ##")
     void readAllPost() {
 
         User user = User.builder()

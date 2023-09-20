@@ -42,4 +42,17 @@ public class Til extends BaseTimeEntity {
         this.tag = tag;
         this.content = content;
     }
+
+    public Til delete() {
+        this.deleted = true;
+        return this;
+    }
+
+    public Til update(String content, String title, String tag) {
+        this.content = content;
+        this.title = title;
+        this.tag = tag;
+
+        return this;
+    }
 }
