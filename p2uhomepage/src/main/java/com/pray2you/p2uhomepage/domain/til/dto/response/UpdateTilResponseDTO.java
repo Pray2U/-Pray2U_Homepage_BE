@@ -2,30 +2,35 @@ package com.pray2you.p2uhomepage.domain.til.dto.response;
 
 import com.pray2you.p2uhomepage.domain.post.dto.response.CreatePostResponseDTO;
 import com.pray2you.p2uhomepage.domain.til.entity.Til;
+import com.pray2you.p2uhomepage.domain.user.dto.response.SimpleUserInfoResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class UpdateTilResponseDTO {
 
-    private long tilId;
-    private long userId;
-    private String username;
-    private String userImg;
-    private String tag;
-    private String title;
-    private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private final long tilId;
+    private final SimpleUserInfoResponseDTO user;
+    private final String tag;
+    private final String title;
+    private final String content;
+    private final LocalDateTime createdDate;
+    private final LocalDateTime modifiedDate;
 
     @Builder
-    public UpdateTilResponseDTO(long tilId, long userId, String username, String userImg, String tag, String title, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private UpdateTilResponseDTO(
+            @NonNull Long tilId,
+            @NonNull SimpleUserInfoResponseDTO user,
+            String tag,
+            @NonNull String title,
+            @NonNull String content,
+            @NonNull LocalDateTime createdDate,
+            @NonNull LocalDateTime modifiedDate) {
         this.tilId = tilId;
-        this.userId = userId;
-        this.username = username;
-        this.userImg = userImg;
+        this.user = user;
         this.tag = tag;
         this.title = title;
         this.content = content;
@@ -36,9 +41,7 @@ public class UpdateTilResponseDTO {
     public static UpdateTilResponseDTO toDTO(Til til) {
         return UpdateTilResponseDTO.builder()
                 .tilId(til.getId())
-                .userId(til.getUser().getId())
-                .username(til.getUser().getUsername())
-                .userImg(til.getUser().getProfileImgUrl())
+                .user(SimpleUserInfoResponseDTO.toDTO(til.getUser()))
                 .tag(til.getTag())
                 .title(til.getTitle())
                 .content(til.getContent())

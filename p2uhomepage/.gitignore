@@ -39,3 +39,4 @@ out/
 
 ### Setting Files ###
 application.properties
+data.sql

@@ -30,9 +30,10 @@ public class JwtTokenProvider {
 
     private final Key SECRET_KEY;
     private final String COOKIE_REFRESH_TOKEN_KEY;
-    private final Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60; // 1시간
-    private final Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60 * 24 * 7; // 1주일
-    private final String AUTHORITIES_KEY = "role";
+    private static final Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60 * 2; // 2시간
+    private static final Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L * 60 * 60 * 24 * 7; // 1주일
+    private static final String AUTHORITIES_KEY = "role";
+    private static final String GITHUB_KEY = "githubId";
     private final RefreshTokenRepository refreshTokenRepository;
 
     public JwtTokenProvider(@Value("${app.auth.token.secret-key}") String secretKey, @Value("${app.auth.token.refresh-cookie-key}")String cookieKey, RefreshTokenRepository refreshTokenRepository) {
@@ -57,7 +58,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject(userId)
                 .claim(AUTHORITIES_KEY, role)
-                .claim("githubId", githubId)
+                .claim(GITHUB_KEY, githubId)
                 .setIssuer("p2u")
                 .setIssuedAt(now)
                 .setExpiration(validity)
@@ -82,7 +83,7 @@ public class JwtTokenProvider {
         ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN_KEY, refreshToken)
                 .httpOnly(false)
                 .secure(true)
-                .sameSite("Lax")
+                .sameSite("None")
                 .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH/1000)
                 .path("/")
                 .build();
@@ -91,6 +92,7 @@ public class JwtTokenProvider {
 
         log.info("헤더에 토큰 추가");
         response.addHeader("Set-Cookie", cookie.toString());
+        log.info("완료");
     }
 
     private void saveRefreshToken(Authentication authentication, String refreshToken) {
@@ -108,8 +110,8 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         log.info(claims.getSubject());
 
-        log.info("githubId " + claims.get("githubId", String.class ));
-        CustomUserDetails principal = new CustomUserDetails(Long.valueOf(claims.getSubject()), claims.get("githubId", String.class), authorities);
+        log.info("githubId " + claims.get(GITHUB_KEY, String.class ));
+        CustomUserDetails principal = new CustomUserDetails(Long.valueOf(claims.getSubject()), claims.get(GITHUB_KEY, String.class), authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }

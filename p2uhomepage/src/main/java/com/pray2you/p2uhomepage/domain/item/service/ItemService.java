@@ -27,7 +27,7 @@ public class ItemService {
         return CreateItemResponseDTO.toDTO(savedItem);
     }
 
-    public DeleteItemResponseDTO deleteItem(Long itemId) {
+    public DeleteItemResponseDTO deleteItem(long itemId) {
         Item deleteItem = itemRepository.findItemByIdAndDeleted(itemId, false)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_ITEM_EXCEPTION));
         deleteItem.delete();
@@ -35,7 +35,7 @@ public class ItemService {
         return DeleteItemResponseDTO.toDTO(deletedItem);
     }
 
-    public UpdateItemResponseDTO updateItem(Long itemId, UpdateItemRequestDTO requestDTO) {
+    public UpdateItemResponseDTO updateItem(long itemId, UpdateItemRequestDTO requestDTO) {
         Item item = itemRepository.findItemByIdAndDeleted(itemId, false)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_ITEM_EXCEPTION));
         Item updateItem = requestDTO.toEntity(item);
@@ -44,7 +44,6 @@ public class ItemService {
     }
 
     public List<ReadItemResponseDTO> readAllItem() {
-
         List<Item> allItem = itemRepository.findByDeleted(false);
         return allItem.stream()
                 .map(ReadItemResponseDTO::toDTO)

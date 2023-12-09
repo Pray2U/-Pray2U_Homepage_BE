@@ -15,6 +15,7 @@ public class UpdateUserRequestDTO {
     private String profileImgUrl;
 
     public User toEntity(User user){
-        return user.update(phoneNumber, profileImgUrl);
+        user.update(phoneNumber, profileImgUrl);
+        return user;
     }
 }

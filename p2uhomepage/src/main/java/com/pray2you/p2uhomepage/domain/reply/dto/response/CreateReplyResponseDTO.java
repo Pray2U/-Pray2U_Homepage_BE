@@ -2,29 +2,34 @@ package com.pray2you.p2uhomepage.domain.reply.dto.response;
 
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.reply.entity.Reply;
+import com.pray2you.p2uhomepage.domain.user.dto.response.SimpleUserInfoResponseDTO;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class CreateReplyResponseDTO {
 
-    private long replyId;
-    private long postId;
-    private long userId;
-    private String username;
-    private String content;
-    private LocalDateTime createdDate;
+    private final long replyId;
+    private final long postId;
+    private final String content;
+    private final SimpleUserInfoResponseDTO user;
+    private final LocalDateTime createdDate;
 
     @Builder
-    public CreateReplyResponseDTO(long replyId, long postId, long userId, String username, String content, LocalDateTime createdDate) {
+    private CreateReplyResponseDTO(
+            @NonNull Long replyId,
+            @NonNull Long postId,
+            @NonNull String content,
+            @NonNull SimpleUserInfoResponseDTO user,
+            @NonNull LocalDateTime createdDate) {
         this.replyId = replyId;
         this.postId = postId;
-        this.userId = userId;
-        this.username = username;
         this.content = content;
+        this.user = user;
         this.createdDate = createdDate;
     }
 
@@ -32,9 +37,8 @@ public class CreateReplyResponseDTO {
         return CreateReplyResponseDTO.builder()
                 .replyId(reply.getId())
                 .postId(reply.getPost().getId())
-                .userId(reply.getUser().getId())
-                .username(reply.getUser().getUsername())
                 .content(reply.getContent())
+                .user(SimpleUserInfoResponseDTO.toDTO(reply.getUser()))
                 .createdDate(reply.getCreatedDate())
                 .build();
     }

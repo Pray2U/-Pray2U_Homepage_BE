@@ -7,8 +7,10 @@ import com.pray2you.p2uhomepage.domain.event.dto.response.DeleteEventResponseDTO
 import com.pray2you.p2uhomepage.domain.event.dto.response.ReadEventResponseDTO;
 import com.pray2you.p2uhomepage.domain.event.dto.response.UpdateEventResponseDTO;
 import com.pray2you.p2uhomepage.domain.event.service.EventService;
+import com.pray2you.p2uhomepage.global.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +25,9 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping("/api/events")
-    public ResponseEntity<Map<String, Object>> createEvent(@RequestBody @Validated CreateEventRequestDTO requestDTO) {
-        CreateEventResponseDTO responseDTO = eventService.createEvent(requestDTO);
+    public ResponseEntity<Map<String, Object>> createEvent(Authentication authentication, @RequestBody @Validated CreateEventRequestDTO requestDTO) {
+        Long userId = ((CustomUserDetails)authentication.getPrincipal()).getId();
+        CreateEventResponseDTO responseDTO = eventService.createEvent(userId, requestDTO);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "해당 이벤트가 추가되었습니다.");
         result.put("data", responseDTO);
@@ -32,8 +35,9 @@ public class EventController {
     }
 
     @PutMapping("/api/events")
-    public ResponseEntity<Map<String, Object>> updateEvent(@RequestBody @Validated UpdateEventRequestDTO requestDTO) {
-        UpdateEventResponseDTO responseDTO = eventService.updateEvent(requestDTO);
+    public ResponseEntity<Map<String, Object>> updateEvent(Authentication authentication, @RequestBody @Validated UpdateEventRequestDTO requestDTO) {
+        Long userId = ((CustomUserDetails)authentication.getPrincipal()).getId();
+        UpdateEventResponseDTO responseDTO = eventService.updateEvent(userId, requestDTO);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "해당 이벤트가 수정되었습니다.");
         result.put("data", responseDTO);
@@ -41,8 +45,9 @@ public class EventController {
     }
 
     @DeleteMapping("/api/events/{eventId}")
-    public ResponseEntity<Map<String, Object>> deleteEvent(@PathVariable(value = "eventId") Long eventId) {
-        DeleteEventResponseDTO responseDTO = eventService.deleteEvent(eventId);
+    public ResponseEntity<Map<String, Object>> deleteEvent(Authentication authentication, @PathVariable(value = "eventId") Long eventId) {
+        Long userId = ((CustomUserDetails)authentication.getPrincipal()).getId();
+        DeleteEventResponseDTO responseDTO = eventService.deleteEvent(userId, eventId);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "해당 이벤트가 삭제되었습니다.");
         result.put("data", responseDTO);

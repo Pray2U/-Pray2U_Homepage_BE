@@ -7,15 +7,17 @@ import java.time.LocalDateTime;
 
 @Getter
 public class CreateAttendanceResponseDTO {
-    private Long attendanceId;
-    private LocalDateTime createDate;
+    private final long attendanceId;
+    private final int point;
+    private final LocalDateTime createDate;
 
-    public CreateAttendanceResponseDTO(Long attendanceId, LocalDateTime createDate) {
+    public CreateAttendanceResponseDTO(long attendanceId, int point, LocalDateTime createDate) {
         this.attendanceId = attendanceId;
+        this.point = point;
         this.createDate = createDate;
     }
 
-    public static CreateAttendanceResponseDTO toDTO(Attendance attendance) {
-        return new CreateAttendanceResponseDTO(attendance.getId(), attendance.getCreateDate());
+    public static CreateAttendanceResponseDTO toDTO(Attendance attendance, int point) {
+        return new CreateAttendanceResponseDTO(attendance.getId(), point, attendance.getCreateDate());
     }
 }

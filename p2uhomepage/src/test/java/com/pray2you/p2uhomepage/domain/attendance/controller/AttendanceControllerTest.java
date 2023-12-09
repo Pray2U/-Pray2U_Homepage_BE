@@ -42,7 +42,7 @@ class AttendanceControllerTest {
     @DisplayName("## 출석정보 등록 컨트롤러 테스트 ##")
     void createAttendance() throws Exception {
 
-        CreateAttendanceResponseDTO responseDTO = new CreateAttendanceResponseDTO(1L, LocalDateTime.now());
+        CreateAttendanceResponseDTO responseDTO = new CreateAttendanceResponseDTO(1L, 1, LocalDateTime.now());
 
         //given
         BDDMockito.given(attendanceService.createAttendance(anyLong())).willReturn(responseDTO);

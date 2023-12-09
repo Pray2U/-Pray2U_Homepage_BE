@@ -2,7 +2,7 @@ package com.pray2you.p2uhomepage.domain.reply.entity;
 
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,15 +39,11 @@ public class Reply extends BaseTimeEntity {
         this.content = content;
     }
 
-    public Reply update(String content) {
+    public void update(String content) {
         this.content = content;
-
-        return this;
     }
 
-    public Reply delete() {
+    public void delete() {
         this.deleted = true;
-
-        return this;
     }
 }

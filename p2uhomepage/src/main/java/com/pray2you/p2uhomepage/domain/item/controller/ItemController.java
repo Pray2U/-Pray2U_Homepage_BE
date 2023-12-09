@@ -22,7 +22,7 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @PostMapping("/api/sale-items")
+    @PostMapping("/api/admin/items")
     public ResponseEntity<Map<String, Object>> createItem(@RequestBody @Validated CreateItemRequestDTO requestDTO) {
 
         CreateItemResponseDTO responseDTO = itemService.createItem(requestDTO);
@@ -32,7 +32,7 @@ public class ItemController {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/api/sale-items/{itemId}")
+    @DeleteMapping("/api/admin/items/{itemId}")
     public ResponseEntity<Map<String, Object>> deleteItem(@PathVariable Long itemId) {
         DeleteItemResponseDTO responseDTO = itemService.deleteItem(itemId);
         Map<String, Object> result = new HashMap<>();
@@ -41,7 +41,7 @@ public class ItemController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PutMapping("/api/sale-items/{itemId}")
+    @PutMapping("/api/admin/items/{itemId}")
     public ResponseEntity<Map<String, Object>> updateItem(@PathVariable Long itemId, @RequestBody @Validated UpdateItemRequestDTO requestDTO) {
         UpdateItemResponseDTO responseDTO = itemService.updateItem(itemId, requestDTO);
         Map<String, Object> result = new HashMap<>();
@@ -50,7 +50,7 @@ public class ItemController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/api/sale-items")
+    @GetMapping("/api/items")
     public ResponseEntity<Map<String, Object>> readAllItem() {
         List<ReadItemResponseDTO> responseDTO = itemService.readAllItem();
         Map<String, Object> result = new HashMap<>();

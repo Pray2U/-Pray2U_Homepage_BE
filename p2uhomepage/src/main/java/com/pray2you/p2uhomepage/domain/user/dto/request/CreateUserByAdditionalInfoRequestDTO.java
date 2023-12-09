@@ -4,9 +4,11 @@ import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import reactor.util.annotation.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,10 +20,11 @@ public class CreateUserByAdditionalInfoRequestDTO {
     @NotBlank
     @Email
     private String email;
-    @NotBlank
+    @Nullable
     private String profileImgUrl;
 
     public User toEntity(User user) {
-        return user.addInformation(username, phoneNumber, email, profileImgUrl);
+        user.addInformation(username, phoneNumber, email, profileImgUrl);
+        return user;
     }
 }

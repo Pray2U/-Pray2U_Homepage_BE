@@ -1,23 +1,28 @@
 package com.pray2you.p2uhomepage.domain.memberapproval.dto.response;
 
 import com.pray2you.p2uhomepage.domain.memberapproval.entity.MemberApproval;
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
-import lombok.Builder;
-import lombok.Getter;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class CreateMemberApprovalResponseDTO {
-    private Long memberApprovalId;
-    private String githubId;
-    private String username;
-    private ApprovalStatus status;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private final long memberApprovalId;
+    private final String githubId;
+    private final String username;
+    private final ApprovalStatus status;
+    private final LocalDateTime createdDate;
+    private final LocalDateTime modifiedDate;
 
     @Builder
-    private CreateMemberApprovalResponseDTO(Long memberApprovalId, String githubId, String username, ApprovalStatus status, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private CreateMemberApprovalResponseDTO(
+            @NonNull Long memberApprovalId,
+            @NonNull String githubId,
+            @NonNull String username,
+            @NonNull ApprovalStatus status,
+            @NonNull LocalDateTime createdDate,
+            @NonNull LocalDateTime modifiedDate) {
         this.memberApprovalId = memberApprovalId;
         this.githubId = githubId;
         this.username = username;

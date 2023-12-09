@@ -1,6 +1,5 @@
 package com.pray2you.p2uhomepage.global.security;
 
-import com.pray2you.p2uhomepage.domain.model.Role;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

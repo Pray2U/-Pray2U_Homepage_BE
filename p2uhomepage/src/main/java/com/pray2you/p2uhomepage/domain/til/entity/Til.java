@@ -1,11 +1,8 @@
 package com.pray2you.p2uhomepage.domain.til.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -29,6 +26,7 @@ public class Til extends BaseTimeEntity {
     @Column
     private String tag;
 
+    @Lob
     @Column(nullable = false)
     private String content;
 
@@ -36,23 +34,24 @@ public class Til extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public Til(User user, String title, String tag, String content) {
+    private Til(
+            @NonNull User user,
+            @NonNull String title,
+            String tag,
+            @NonNull String content) {
         this.user = user;
         this.title = title;
         this.tag = tag;
         this.content = content;
     }
 
-    public Til delete() {
+    public void delete() {
         this.deleted = true;
-        return this;
     }
 
-    public Til update(String content, String title, String tag) {
+    public void update(String content, String title, String tag) {
         this.content = content;
         this.title = title;
         this.tag = tag;
-
-        return this;
     }
 }

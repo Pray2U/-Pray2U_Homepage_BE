@@ -1,22 +1,29 @@
 package com.pray2you.p2uhomepage.domain.memberapproval.dto.response;
 
 import com.pray2you.p2uhomepage.domain.memberapproval.entity.MemberApproval;
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
-import lombok.Builder;
-import lombok.Getter;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class DeleteMemberApprovalResponseDTO {
-    private String githubId;
-    private String username;
-    private ApprovalStatus status;
-    private LocalDateTime createDate;
-    private LocalDateTime deletedDate;
+    private final long memberApprovalId;
+    private final String githubId;
+    private final String username;
+    private final ApprovalStatus status;
+    private final LocalDateTime createDate;
+    private final LocalDateTime deletedDate;
 
     @Builder
-    private DeleteMemberApprovalResponseDTO(String githubId, String username, ApprovalStatus status, LocalDateTime createDate, LocalDateTime deletedDate) {
+    private DeleteMemberApprovalResponseDTO(
+            @NonNull Long memberApprovalId,
+            @NonNull String githubId,
+            @NonNull String username,
+            @NonNull ApprovalStatus status,
+            @NonNull LocalDateTime createDate,
+            @NonNull LocalDateTime deletedDate) {
+        this.memberApprovalId = memberApprovalId;
         this.githubId = githubId;
         this.username = username;
         this.status = status;
@@ -26,6 +33,7 @@ public class DeleteMemberApprovalResponseDTO {
 
     public static DeleteMemberApprovalResponseDTO toDTO(MemberApproval memberApproval){
         return builder()
+                .memberApprovalId(memberApproval.getId())
                 .githubId(memberApproval.getGithubId())
                 .username(memberApproval.getUsername())
                 .status(memberApproval.getStatus())

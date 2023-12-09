@@ -28,6 +28,7 @@ public class UpdateTilRequestDTO {
     }
 
     public Til toEntity(Til til) {
-        return til.update(content, title, tag);
+        til.update(content, title, tag);
+        return til;
     }
 }

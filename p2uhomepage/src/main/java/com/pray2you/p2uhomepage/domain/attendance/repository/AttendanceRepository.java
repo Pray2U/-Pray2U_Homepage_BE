@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
-    List<Attendance> findAllByUserAndCreateDateBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
+    List<Attendance> findAllByUserAndCreateDateGreaterThanEqualAndCreateDateLessThan(User user, LocalDateTime startDate, LocalDateTime endDate);
+    boolean existsByUserAndCreateDateGreaterThanEqualAndCreateDateLessThan(User user, LocalDateTime startDate, LocalDateTime endDate);
+
 }

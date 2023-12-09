@@ -42,7 +42,7 @@ public class AuthService {
         RefreshToken savedToken = refreshTokenRepository.findById(String.valueOf(user.getName()))
                 .orElseThrow(()-> new RestApiException(UserErrorCode.NOT_FOUND_REFRESH_TOKEN));
 
-        if (!savedToken.getRefreshToken().equals(oldRefreshToken)) {
+        if (!savedToken.getToken().equals(oldRefreshToken)) {
             throw new RestApiException(UserErrorCode.NOT_MATCH_REFRESH_TOKEN);
         }
 

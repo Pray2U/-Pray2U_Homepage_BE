@@ -24,7 +24,8 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/api/users/infoform")
+
+    @PostMapping("/api/auth/users/addinfo")
     public ResponseEntity<Map<String, Object>> createUserByAdditionalInfo(
             Authentication authentication,
             @Validated @RequestBody CreateUserByAdditionalInfoRequestDTO requestDTO) {
@@ -70,18 +71,18 @@ public class UserController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("api/admin/users")
+    @GetMapping("api/users")
     public ResponseEntity<Map<String, Object>> readAllUser(Pageable pageable) {
-        Page<ReadUserInfoResponseDTO> responseDTO = userService.readAllUser(pageable);
+        Page<AllUserInfoResponseDTO> responseDTO = userService.readAllUser(pageable);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "전체 유저 조회가 완료되었습니다.");
         result.put("data", responseDTO);
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("api/admin/users/role/{githubId}")
-    public ResponseEntity<Map<String, Object>> updateRole(@PathVariable(value = "githubId") String githubId, @Validated @RequestBody UpdateUserRoleRequestDTO requestDTO) {
-        UpdateRoleResponseDTO responseDTO = userService.updateRole(githubId, requestDTO);
+    @PostMapping("api/users/roles/{userId}")
+    public ResponseEntity<Map<String, Object>> updateRole(@PathVariable(value = "userId") long userId, @Validated @RequestBody UpdateUserRoleRequestDTO requestDTO) {
+        UpdateRoleResponseDTO responseDTO = userService.updateRole(userId, requestDTO);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "해당 유저 권한변경이 완료되었습니다.");
         result.put("data", responseDTO);

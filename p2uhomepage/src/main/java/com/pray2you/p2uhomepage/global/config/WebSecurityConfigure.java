@@ -41,9 +41,20 @@ public class WebSecurityConfigure {
 
         //요청에 대한 권한 설정
         http.authorizeRequests()
-//                .antMatchers("/api/admin/**").hasRole("ADMIN")
-//                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/auth/users/**").hasRole("GUEST")
+                .antMatchers("/api/login/**").permitAll()
+                .antMatchers("/api/tils/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/posts/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/replies/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/items/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/users/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/events/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/orders/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/attendance/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/points/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/detailpoints/**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/ranks/**").access("hasRole('ADMIN') or hasRole('USER')")
                 .anyRequest().authenticated();
 
         //oauth2Login

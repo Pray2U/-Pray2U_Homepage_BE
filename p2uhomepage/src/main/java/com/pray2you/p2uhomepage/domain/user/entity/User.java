@@ -1,11 +1,8 @@
 package com.pray2you.p2uhomepage.domain.user.entity;
 
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
-import com.pray2you.p2uhomepage.domain.model.Role;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
+import com.pray2you.p2uhomepage.domain.user.enumeration.Role;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -42,7 +39,13 @@ public class User extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public User(String githubId, String username, String profileImgUrl, String phoneNumber, String email, Role role) {
+    private User(
+            @NonNull String githubId,
+            @NonNull String username,
+            @NonNull String profileImgUrl,
+            @NonNull String phoneNumber,
+            @NonNull String email,
+            @NonNull Role role) {
         this.githubId = githubId;
         this.username = username;
         this.profileImgUrl = profileImgUrl;
@@ -57,28 +60,24 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public User addInformation(String username, String phoneNumber, String email, String profileImgUrl) {
+    public void addInformation(String username, String phoneNumber, String email, String profileImgUrl) {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.profileImgUrl = profileImgUrl;
+        this.profileImgUrl = profileImgUrl == null ? this.profileImgUrl : profileImgUrl;
         this.role = Role.ROLE_USER;
-        return this;
     }
 
-    public User delete(){
+    public void delete(){
         this.deleted = true;
-        return this;
     }
 
-    public User update(String phoneNumber, String profileImgUrl){
+    public void update(String phoneNumber, String profileImgUrl){
         this.phoneNumber = phoneNumber;
         this.profileImgUrl = profileImgUrl;
-        return this;
     }
 
-    public User updateRole(Role role){
+    public void updateRole(Role role){
         this.role = role;
-        return this;
     }
 }

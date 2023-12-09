@@ -1,8 +1,8 @@
 package com.pray2you.p2uhomepage.global.security.service;
 
 import com.pray2you.p2uhomepage.domain.memberapproval.repository.MemberApprovalRepository;
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
-import com.pray2you.p2uhomepage.domain.model.Role;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
+import com.pray2you.p2uhomepage.domain.user.enumeration.Role;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import com.pray2you.p2uhomepage.domain.user.repository.UserRepository;
 import com.pray2you.p2uhomepage.global.security.CustomUserDetails;
@@ -27,8 +27,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
-
-        OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
 
         if(!checkMemberApproval(oAuth2User.getAttribute("login"))){
@@ -42,7 +41,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private boolean checkMemberApproval(String githubId){
-        return memberApprovalRepository.existsByGithubIdAndStatus(githubId, ApprovalStatus.APPROVED);
+        return memberApprovalRepository.existsByGithubIdAndStatus(githubId,  ApprovalStatus.APPROVED);
     }
 
     private User saveOrUpdate(OAuth2User oAuth2User){
@@ -55,8 +54,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .role(Role.ROLE_GUEST)
                 .build();
 
-        User user = userRepository.findByGithubId(oAuthUser.getGithubId())
-                .map(entity -> entity.updateForOauth(oAuthUser))
+        User user = userRepository.findByGithubIdAndDeleted(oAuthUser.getGithubId(), false)
                 .orElse(oAuthUser);
 
         return userRepository.save(user);

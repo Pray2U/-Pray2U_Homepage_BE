@@ -62,17 +62,6 @@ public class TilController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("api/tils")
-    ResponseEntity<Map<String, Object>> readAllTil(Pageable pageable) {
-
-        Page<ReadTilResponseDTO> responseDTOPage = tilService.readAllTil(pageable);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("msg", "성공적으로 TIL이 조회되었습니다.");
-        result.put("data", responseDTOPage);
-        return ResponseEntity.ok().body(result);
-    }
-
     @GetMapping("api/tils/{tilId}")
     ResponseEntity<Map<String, Object>> readTil(@PathVariable long tilId) {
 
@@ -89,9 +78,20 @@ public class TilController {
         Page<ReadTilResponseDTO> responseDTOPage = tilService.readUserTil(pageable, userId);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("msg", "성공적으로 TIL이 조회되었습니다.");
+        result.put("msg", "성공적으로 userId :" + userId + "의 TIL이 조회되었습니다.");
         result.put("data", responseDTOPage);
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("api/tils")
+    ResponseEntity<Map<String, Object>> readTils(Pageable pageable, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        Page<ReadTilResponseDTO> responseDTOPage = tilService.readTils(pageable, keyword);
+
+        Map<String, Object> result = new HashMap<>();
+
+        keyword = keyword.isEmpty() ?  "전체" : "search = " + keyword;
+        result.put("msg", "성공적으로 " + keyword + " TIL이 조회되었습니다.");
+        result.put("data", responseDTOPage);
+        return ResponseEntity.ok().body(result);
+    }
 }

@@ -1,7 +1,6 @@
 package com.pray2you.p2uhomepage.domain.post.dto.request;
 
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
-import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +16,7 @@ public class UpdatePostRequestDTO {
 
     @NotBlank
     private String content;
-
-    @NotBlank
+    
     private String fileUrl;
 
     public UpdatePostRequestDTO(String title, String content, String fileUrl) {
@@ -28,6 +26,7 @@ public class UpdatePostRequestDTO {
     }
 
     public Post toEntity(Post post) {
-        return post.update(title, content, fileUrl);
+        post.update(title, content, fileUrl);
+        return post;
     }
 }

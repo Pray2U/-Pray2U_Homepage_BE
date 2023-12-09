@@ -1,5 +1,7 @@
 package com.pray2you.p2uhomepage.global.security.handler;
 
+import com.pray2you.p2uhomepage.global.exception.RestApiException;
+import com.pray2you.p2uhomepage.global.exception.errorcode.CommonErrorCode;
 import com.pray2you.p2uhomepage.global.exception.errorcode.ErrorCode;
 import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.security.jwt.JwtTokenProvider;
@@ -55,7 +57,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             try {
                 setResponse(response, errorCode);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RestApiException(CommonErrorCode.INTERNAL_SERVER_ERROR);
             }
         }
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());

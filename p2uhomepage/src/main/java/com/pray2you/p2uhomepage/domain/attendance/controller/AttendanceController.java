@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class AttendanceController {
         Long userId = ((CustomUserDetails)authentication.getPrincipal()).getId();
         CreateAttendanceResponseDTO responseDTO = attendanceService.createAttendance(userId);
         Map<String, Object> result = new HashMap<>();
-        result.put("msg", "해당 출석정보가 생성되었습니다.");
+        result.put("msg", LocalDate.now() + " 날짜 출석이 완료되었습니다.");
         result.put("data", responseDTO);
         return ResponseEntity.ok().body(result);
     }
@@ -37,7 +38,7 @@ public class AttendanceController {
         Long userId = ((CustomUserDetails)authentication.getPrincipal()).getId();
         List<ReadAttendanceResponseDTO> responseDTO = attendanceService.readAttendance(userId, year, month);
         Map<String, Object> result = new HashMap<>();
-        result.put("msg", "해당 출석정보가 조회되었습니다.");
+        result.put("msg", year + "년 "+ month + "월의 출석정보가 조회되었습니다.");
         result.put("data", responseDTO);
         return ResponseEntity.ok().body(result);
     }

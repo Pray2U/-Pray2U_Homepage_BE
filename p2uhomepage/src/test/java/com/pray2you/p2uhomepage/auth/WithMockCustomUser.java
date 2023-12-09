@@ -1,6 +1,6 @@
 package com.pray2you.p2uhomepage.auth;
 
-import com.pray2you.p2uhomepage.domain.model.Role;
+import com.pray2you.p2uhomepage.domain.user.enumeration.Role;
 import org.springframework.security.test.context.support.WithSecurityContext;
 
 import java.lang.annotation.Retention;

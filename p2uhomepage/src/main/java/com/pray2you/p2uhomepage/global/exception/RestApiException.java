@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RestApiException extends RuntimeException {
 
+    private static final long serialVersionUID = 8747231388755467240L;
     private final ErrorCode errorCode;
 
 }

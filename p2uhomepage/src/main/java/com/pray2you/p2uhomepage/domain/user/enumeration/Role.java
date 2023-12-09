@@ -1,4 +1,4 @@
-package com.pray2you.p2uhomepage.domain.model;
+package com.pray2you.p2uhomepage.domain.user.enumeration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

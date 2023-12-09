@@ -1,4 +1,4 @@
-package com.pray2you.p2uhomepage.domain.model;
+package com.pray2you.p2uhomepage.domain.memberapproval.enumeration;
 
 import lombok.Getter;
 
@@ -6,7 +6,6 @@ import lombok.Getter;
 public enum ApprovalStatus {
 
         APPROVED("APPROVED"),
-        JOINED("JOINED"),
         DELETED("DELETED")
         ;
 
