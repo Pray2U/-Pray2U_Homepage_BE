@@ -2,10 +2,7 @@ package com.pray2you.p2uhomepage.domain.post.service;
 
 import com.pray2you.p2uhomepage.domain.post.dto.request.CreatePostRequestDTO;
 import com.pray2you.p2uhomepage.domain.post.dto.request.UpdatePostRequestDTO;
-import com.pray2you.p2uhomepage.domain.post.dto.response.CreatePostResponseDTO;
-import com.pray2you.p2uhomepage.domain.post.dto.response.DeletePostResponseDTO;
-import com.pray2you.p2uhomepage.domain.post.dto.response.ReadPostResponseDTO;
-import com.pray2you.p2uhomepage.domain.post.dto.response.UpdatePostResponseDTO;
+import com.pray2you.p2uhomepage.domain.post.dto.response.*;
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.post.repository.PostRepository;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
@@ -26,8 +23,7 @@ public class PostService {
 
     public CreatePostResponseDTO createPost(long userId, CreatePostRequestDTO requestDTO) {
 
-        User user = userRepository.findByIdAndDeleted(userId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
+        User user = findUser(userId);
 
         Post post = requestDTO.toEntity(user);
         Post savedPost = postRepository.save(post);
@@ -35,9 +31,11 @@ public class PostService {
         return CreatePostResponseDTO.toDTO(savedPost);
     }
 
-    public UpdatePostResponseDTO updatePost(long postId, UpdatePostRequestDTO requestDTO) {
+    public UpdatePostResponseDTO updatePost(long userId, long postId, UpdatePostRequestDTO requestDTO) {
 
-        Post post = postRepository.findByIdAndDeleted(postId, false)
+        User user = findUser(userId);
+
+        Post post = postRepository.findByIdAndUserAndDeleted(postId, user, false)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_POST_EXCEPTION));
 
         Post updatePost = requestDTO.toEntity(post);
@@ -50,8 +48,8 @@ public class PostService {
         Post post = postRepository.findByIdAndDeleted(postId, false)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_POST_EXCEPTION));
 
-        Post deletePost = post.delete();
-        Post deletedPost = postRepository.save(deletePost);
+        post.delete();
+        Post deletedPost = postRepository.save(post);
 
         return DeletePostResponseDTO.toDTO(deletedPost);
     }
@@ -63,9 +61,14 @@ public class PostService {
         return ReadPostResponseDTO.toDTO(post);
     }
 
-    public Page<ReadPostResponseDTO> readAllPost(Pageable pageable) {
+    public Page<ReadAllPostResponseDTO> readAllPost(Pageable pageable) {
         Page<Post> posts = postRepository.findByDeleted(pageable, false);
 
-        return posts.map(ReadPostResponseDTO::toDTO);
+        return posts.map(ReadAllPostResponseDTO::toDTO);
+    }
+
+    private User findUser(long userId) {
+        return userRepository.findByIdAndDeleted(userId, false)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
     }
 }

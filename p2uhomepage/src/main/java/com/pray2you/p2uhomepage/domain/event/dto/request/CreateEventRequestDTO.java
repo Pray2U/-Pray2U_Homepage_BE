@@ -1,6 +1,7 @@
 package com.pray2you.p2uhomepage.domain.event.dto.request;
 
 import com.pray2you.p2uhomepage.domain.event.entity.Event;
+import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,9 @@ public class CreateEventRequestDTO {
     private LocalDateTime eventEndDate;
     private String contents;
 
-    public Event toEntity() {
+    public Event toEntity(User user) {
         return Event.builder()
+                .user(user)
                 .title(this.title)
                 .eventStartDate(this.eventStartDate)
                 .eventEndDate(this.eventEndDate)

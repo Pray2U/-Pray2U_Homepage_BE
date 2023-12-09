@@ -2,8 +2,10 @@ package com.pray2you.p2uhomepage.global.exception.errorcode;
 
 import org.springframework.http.HttpStatus;
 
-public interface ErrorCode {
+import java.io.Serializable;
 
+
+public interface ErrorCode extends Serializable {
     String name();
     HttpStatus getHttpStatus();
     String getMessage();

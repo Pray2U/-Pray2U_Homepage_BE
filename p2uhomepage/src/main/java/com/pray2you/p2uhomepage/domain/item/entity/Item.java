@@ -1,10 +1,7 @@
 package com.pray2you.p2uhomepage.domain.item.entity;
 
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -25,7 +22,7 @@ public class Item extends BaseTimeEntity {
     private String imgUrl;
 
     @Column(nullable = false)
-    private long point;
+    private int point;
 
     @Column(nullable = false)
     private String itemDescription;
@@ -34,23 +31,25 @@ public class Item extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public Item(String itemName, String imgUrl, long point, String itemDescription) {
+    private Item(
+            @NonNull String itemName,
+            @NonNull String imgUrl,
+            @NonNull Integer point,
+            @NonNull String itemDescription) {
         this.itemName = itemName;
         this.imgUrl = imgUrl;
         this.point = point;
         this.itemDescription = itemDescription;
     }
 
-    public Item delete() {
+    public void delete() {
         this.deleted = true;
-        return this;
     }
 
-    public Item update(String itemName, String imgUrl, long point, String itemDescription) {
+    public void update(String itemName, String imgUrl, int point, String itemDescription) {
         this.itemName = itemName;
         this.imgUrl = imgUrl;
         this.point = point;
         this.itemDescription = itemDescription;
-        return this;
     }
 }

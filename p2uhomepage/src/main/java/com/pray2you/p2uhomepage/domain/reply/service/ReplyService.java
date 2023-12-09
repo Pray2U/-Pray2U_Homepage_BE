@@ -11,6 +11,7 @@ import com.pray2you.p2uhomepage.domain.reply.dto.response.UpdateReplyResponseDTO
 import com.pray2you.p2uhomepage.domain.reply.entity.Reply;
 import com.pray2you.p2uhomepage.domain.reply.repository.ReplyRepository;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
+import com.pray2you.p2uhomepage.domain.user.enumeration.Role;
 import com.pray2you.p2uhomepage.domain.user.repository.UserRepository;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
@@ -29,11 +30,9 @@ public class ReplyService {
 
     public CreateReplyResponseDTO createReply(long userId, long postId, CreateReplyRequestDTO requestDTO) {
 
-        User user = userRepository.findByIdAndDeleted(userId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
+        User user = findUser(userId);
 
-        Post post = postRepository.findByIdAndDeleted(postId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_POST_EXCEPTION));
+        Post post = findPost(postId);
 
         Reply reply = requestDTO.toEntity(user, post);
         Reply savedReply = replyRepository.save(reply);
@@ -42,17 +41,13 @@ public class ReplyService {
     }
 
     public UpdateReplyResponseDTO updateReply(long userId, long postId, long replyId, UpdateReplyRequestDTO requestDTO) {
-        User user = userRepository.findByIdAndDeleted(userId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
+        User user = findUser(userId);
 
-        Reply reply = replyRepository.findByIdAndDeleted(replyId, false)
+        Reply reply = replyRepository.findByIdAndUserAndDeleted(replyId, user, false)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_REPLY_EXCEPTION));
 
-        if (!user.equals(reply.getUser())) {
-            throw new RestApiException(UserErrorCode.ACCESS_DENIED);
-        }
-
-        if (reply.getPost().getId() != postId) {
+        //요청 온 게시글아이디와 댓글의 게시글 아이디가 일치하는지
+        if (!isEqualReplyPostIdAndRequestPostId(reply, postId)) {
             throw new RestApiException(UserErrorCode.NOT_MATCH_POST_EXCEPTION);
         }
 
@@ -63,21 +58,26 @@ public class ReplyService {
     }
 
     public DeleteReplyResponseDTO deleteReply(long userId, long postId, long replyId) {
-        User user = userRepository.findByIdAndDeleted(userId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
+        User user = findUser(userId);
 
-        Reply reply = replyRepository.findByIdAndDeleted(replyId, false)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_REPLY_EXCEPTION));
+        //운영진일 경우, 본인 작성 댓글 외의 댓글도 삭제 가능
+        Reply reply;
+        if (user.getRole() == Role.ROLE_ADMIN) {
+            reply = replyRepository.findByIdAndDeleted(replyId, false)
+                    .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_REPLY_EXCEPTION));
+        } else {
+            reply = replyRepository.findByIdAndUserAndDeleted(replyId, user, false)
+                    .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_REPLY_EXCEPTION));
+        }
 
-        if (reply.getPost().getId() != postId) {
+        //요청 온 게시글아이디와 댓글의 게시글 아이디가 일치하는지
+        if (!isEqualReplyPostIdAndRequestPostId(reply, postId)) {
             throw new RestApiException(UserErrorCode.NOT_MATCH_POST_EXCEPTION);
         }
 
-        if (!user.equals(reply.getUser())) {
-            throw new RestApiException(UserErrorCode.ACCESS_DENIED);
-        }
 
-        Reply deletedReply = replyRepository.save(reply.delete());
+        reply.delete();
+        Reply deletedReply = replyRepository.save(reply);
         return DeleteReplyResponseDTO.toDTO(deletedReply);
     }
 
@@ -91,11 +91,24 @@ public class ReplyService {
 
     public Page<ReadReplyResponseDTO> readAllPostReply(Pageable pageable, long postId) {
 
-        Post post = postRepository.findByIdAndDeleted(postId, false)
-                .orElseThrow(()-> new RestApiException(UserErrorCode.NOT_EXIST_POST_EXCEPTION));
+        Post post = findPost(postId);
 
         Page<Reply> replyPage = replyRepository.findAllByPostAndDeleted(pageable, post, false);
 
         return replyPage.map(ReadReplyResponseDTO::toDTO);
+    }
+
+    private User findUser(long userId) {
+        return userRepository.findByIdAndDeleted(userId, false)
+                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_USER_EXCEPTION));
+    }
+
+    private Post findPost(long postId) {
+        return postRepository.findByIdAndDeleted(postId, false)
+                .orElseThrow(()-> new RestApiException(UserErrorCode.NOT_EXIST_POST_EXCEPTION));
+    }
+
+    private boolean isEqualReplyPostIdAndRequestPostId(Reply reply, long postId) {
+        return reply.getPost().getId() == postId;
     }
 }

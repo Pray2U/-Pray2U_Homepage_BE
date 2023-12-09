@@ -1,6 +1,8 @@
-package com.pray2you.p2uhomepage.domain.totalpoint.entity;
+package com.pray2you.p2uhomepage.domain.point.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
+import com.pray2you.p2uhomepage.global.exception.RestApiException;
+import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,14 +24,16 @@ public class TotalPoint {
     private User user;
 
     @Column(nullable = false)
-    private long totalPoint;
+    private int currentPoint = 0;
 
-    @Column(nullable = false)
-    private long currentPoint;
-
-    public TotalPoint(User user, long totalPoint, long currentPoint) {
+    public TotalPoint(User user) {
         this.user = user;
-        this.totalPoint = totalPoint;
-        this.currentPoint = currentPoint;
+    }
+
+    public void addPoint(long point) {
+        this.currentPoint += point;
+        if(currentPoint < 0) {
+            throw new RestApiException(UserErrorCode.NO_POINT_EXCEPTION);
+        }
     }
 }

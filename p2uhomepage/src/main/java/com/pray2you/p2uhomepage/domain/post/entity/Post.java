@@ -1,11 +1,8 @@
 package com.pray2you.p2uhomepage.domain.post.entity;
 
 import com.pray2you.p2uhomepage.domain.user.entity.User;
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -26,6 +23,7 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
+    @Lob
     @Column(nullable = false)
     private String content;
 
@@ -36,23 +34,25 @@ public class Post extends BaseTimeEntity {
     private boolean deleted = false;
 
     @Builder
-    public Post(User user, String title, String content, String fileUrl) {
+    private Post(
+            @NonNull User user,
+            @NonNull String title,
+            @NonNull String content,
+            String fileUrl) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.fileUrl = fileUrl;
     }
 
-    public Post update(String title, String content, String fileUrl) {
+    public void update(String title, String content, String fileUrl) {
         this.title = title;
         this.content = content;
         this.fileUrl = fileUrl;
 
-        return this;
     }
 
-    public Post delete() {
+    public void delete() {
         this.deleted = true;
-        return this;
     }
 }

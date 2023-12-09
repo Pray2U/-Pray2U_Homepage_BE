@@ -26,13 +26,13 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
 
         if(exception instanceof OAuth2AuthenticationException){
-            response.sendRedirect("/");
+            response.sendRedirect("https://pray2u.com/?approved=false");
             return;
         }
 
         String targetUrl = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue)
-                .orElse("/");
+                .orElse("https://pray2u.com");
 
         targetUrl = UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("error", exception.getLocalizedMessage())

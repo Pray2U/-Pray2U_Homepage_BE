@@ -17,7 +17,7 @@ public class CreateItemRequestDTO {
     @NotBlank
     private String itemName;
     @NotNull
-    private long point;
+    private int point;
     @NotBlank
     private String itemDescription;
 

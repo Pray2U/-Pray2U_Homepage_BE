@@ -2,29 +2,35 @@ package com.pray2you.p2uhomepage.domain.reply.dto.response;
 
 import com.pray2you.p2uhomepage.domain.post.entity.Post;
 import com.pray2you.p2uhomepage.domain.reply.entity.Reply;
+import com.pray2you.p2uhomepage.domain.user.dto.response.SimpleUserInfoResponseDTO;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class DeleteReplyResponseDTO {
 
-    private long replyId;
-    private long postId;
-    private long userId;
-    private String username;
-    private String content;
-    private LocalDateTime createdDate;
-    private LocalDateTime deletedDate;
+    private final long replyId;
+    private final long postId;
+    private final SimpleUserInfoResponseDTO user;
+    private final String content;
+    private final LocalDateTime createdDate;
+    private final LocalDateTime deletedDate;
 
     @Builder
-    public DeleteReplyResponseDTO(long replyId, long postId, long userId, String username, String content, LocalDateTime createdDate, LocalDateTime deletedDate) {
+    private DeleteReplyResponseDTO(
+            @NonNull Long replyId,
+            @NonNull Long postId,
+            @NonNull SimpleUserInfoResponseDTO user,
+            @NonNull String content,
+            @NonNull LocalDateTime createdDate,
+            @NonNull LocalDateTime deletedDate) {
         this.replyId = replyId;
         this.postId = postId;
-        this.userId = userId;
-        this.username = username;
+        this.user = user;
         this.content = content;
         this.createdDate = createdDate;
         this.deletedDate = deletedDate;
@@ -34,9 +40,8 @@ public class DeleteReplyResponseDTO {
         return DeleteReplyResponseDTO.builder()
                 .replyId(reply.getId())
                 .postId(reply.getPost().getId())
-                .userId(reply.getUser().getId())
-                .username(reply.getUser().getUsername())
                 .content(reply.getContent())
+                .user(SimpleUserInfoResponseDTO.toDTO(reply.getUser()))
                 .createdDate(reply.getCreatedDate())
                 .deletedDate(reply.getModifiedDate())
                 .build();

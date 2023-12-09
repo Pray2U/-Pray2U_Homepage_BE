@@ -1,27 +1,37 @@
 package com.pray2you.p2uhomepage.domain.user.dto.response;
 
-import com.pray2you.p2uhomepage.domain.model.Role;
+import com.pray2you.p2uhomepage.domain.user.enumeration.Role;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class UpdateRoleResponseDTO {
 
-    private Long userId;
-    private String githubId;
-    private String username;
-    private String phoneNumber;
-    private String profileImgUrl;
-    private String email;
-    private Role role;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private final long userId;
+    private final String githubId;
+    private final String username;
+    private final String phoneNumber;
+    private final String profileImgUrl;
+    private final String email;
+    private final Role role;
+    private final LocalDateTime createdDate;
+    private final LocalDateTime modifiedDate;
 
     @Builder
-    private UpdateRoleResponseDTO(Long userId, String githubId, String username, String phoneNumber, String profileImgUrl, String email, Role role, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    private UpdateRoleResponseDTO(
+            @NonNull Long userId,
+            @NonNull String githubId,
+            @NonNull String username,
+            @NonNull String phoneNumber,
+            @NonNull String profileImgUrl,
+            @NonNull String email,
+            @NonNull Role role,
+            @NonNull LocalDateTime createdDate,
+            @NonNull LocalDateTime modifiedDate) {
         this.userId = userId;
         this.githubId = githubId;
         this.username = username;

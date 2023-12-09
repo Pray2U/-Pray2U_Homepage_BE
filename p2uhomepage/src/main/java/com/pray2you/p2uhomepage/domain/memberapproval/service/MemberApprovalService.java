@@ -6,7 +6,7 @@ import com.pray2you.p2uhomepage.domain.memberapproval.dto.response.DeleteMemberA
 import com.pray2you.p2uhomepage.domain.memberapproval.dto.response.ReadMemberApprovalResponseDTO;
 import com.pray2you.p2uhomepage.domain.memberapproval.entity.MemberApproval;
 import com.pray2you.p2uhomepage.domain.memberapproval.repository.MemberApprovalRepository;
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
 import com.pray2you.p2uhomepage.global.exception.errorcode.UserErrorCode;
 import com.pray2you.p2uhomepage.global.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,6 @@ public class MemberApprovalService {
     private final MemberApprovalRepository memberApprovalRepository;
 
     public CreateMemberApprovalResponseDTO createMemberApprovals(CreateMemberApprovalRequestDTO requestDTO){
-
         memberApprovalRepository.findByGithubIdAndStatusNot(requestDTO.getGithubId(), ApprovalStatus.DELETED)
                 .ifPresent(value -> {
                     throw new RestApiException(UserErrorCode.DUPLICATE_APPROVAL_EXCEPTION); // 값이 있으면 에러를 발생시킴
@@ -35,7 +34,6 @@ public class MemberApprovalService {
     }
 
     public DeleteMemberApprovalResponseDTO deleteMemberApprovals(String githubId){
-
         MemberApproval memberApproval = memberApprovalRepository.findByGithubIdAndStatus(githubId, ApprovalStatus.APPROVED)
                 .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_APPROVAL_EXCEPTION));
 
@@ -50,12 +48,5 @@ public class MemberApprovalService {
         Page<MemberApproval> memberApprovals = memberApprovalRepository.findByStatusNot(ApprovalStatus.DELETED, pageable);
         return memberApprovals
                 .map(ReadMemberApprovalResponseDTO::toDTO);
-    }
-
-    public void updateApprovalStatus(String githubId, ApprovalStatus approvalStatus) {
-        MemberApproval memberApproval = memberApprovalRepository.findByGithubIdAndStatusNot(githubId, ApprovalStatus.DELETED)
-                .orElseThrow(() -> new RestApiException(UserErrorCode.NOT_EXIST_APPROVAL_EXCEPTION));
-        memberApproval.updateStatus(approvalStatus);
-        memberApprovalRepository.save(memberApproval);
     }
 }

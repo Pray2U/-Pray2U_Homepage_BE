@@ -1,46 +1,52 @@
 package com.pray2you.p2uhomepage.domain.til.dto.response;
 
 import com.pray2you.p2uhomepage.domain.til.entity.Til;
+import com.pray2you.p2uhomepage.domain.user.dto.response.SimpleUserInfoResponseDTO;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class CreateTilResponseDTO {
 
-    private long tilId;
-    private long userId;
-    private String username;
-    private String userImg;
-    private String tag;
-    private String title;
-    private String content;
-    private LocalDateTime createdDate;
+    private final long tilId;
+    private final SimpleUserInfoResponseDTO user;
+    private final String tag;
+    private final String title;
+    private final String content;
+    private final LocalDateTime createdDate;
+    private final int point;
 
     @Builder
-    public CreateTilResponseDTO(long tilId, long userId, String username, String userImg, String tag, String title, String content, LocalDateTime createdDate) {
+    private CreateTilResponseDTO(
+            @NonNull Long tilId,
+            @NonNull SimpleUserInfoResponseDTO user,
+            String tag,
+            @NonNull String title,
+            @NonNull String content,
+            @NonNull LocalDateTime createdDate,
+            int point) {
         this.tilId = tilId;
-        this.userId = userId;
-        this.username = username;
-        this.userImg = userImg;
+        this.user = user;
         this.tag = tag;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
+        this.point = point;
     }
 
-    public static CreateTilResponseDTO toDTO(Til til){
+    public static CreateTilResponseDTO toDTO(Til til, int point){
         return CreateTilResponseDTO.builder()
                 .tilId(til.getId())
-                .userId(til.getUser().getId())
-                .username(til.getUser().getUsername())
-                .userImg(til.getUser().getProfileImgUrl())
+                .user(SimpleUserInfoResponseDTO.toDTO(til.getUser()))
                 .tag(til.getTag())
                 .title(til.getTitle())
                 .content(til.getContent())
                 .createdDate(til.getCreatedDate())
+                .point(point)
                 .build();
     }
 }

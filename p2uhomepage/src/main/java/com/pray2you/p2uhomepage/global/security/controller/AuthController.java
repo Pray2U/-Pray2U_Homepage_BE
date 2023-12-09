@@ -21,7 +21,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/api/auth/refresh")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, String> accessToken){
+    public ResponseEntity<Map<String, Object>> refreshToken(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, String> accessToken){
 
         String token = authService.refreshToken(request, response, accessToken.get("accessToken"));
         Map<String , Object> result = new HashMap<>();

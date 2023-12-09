@@ -1,7 +1,7 @@
 package com.pray2you.p2uhomepage.domain.memberapproval.dto.request;
 
 import com.pray2you.p2uhomepage.domain.memberapproval.entity.MemberApproval;
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

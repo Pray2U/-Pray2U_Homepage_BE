@@ -18,11 +18,12 @@ public class UpdateItemRequestDTO {
     @NotBlank
     private String itemName;
     @NotNull
-    private long point;
+    private int point;
     @NotBlank
     private String itemDescription;
 
     public Item toEntity(Item item) {
-        return item.update(itemName, imgUrl, point, itemDescription);
+        item.update(itemName, imgUrl, point, itemDescription);
+        return item;
     }
 }

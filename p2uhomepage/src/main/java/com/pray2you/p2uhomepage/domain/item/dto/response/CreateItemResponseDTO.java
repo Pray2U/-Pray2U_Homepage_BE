@@ -1,23 +1,28 @@
 package com.pray2you.p2uhomepage.domain.item.dto.response;
 
 import com.pray2you.p2uhomepage.domain.item.entity.Item;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class CreateItemResponseDTO {
 
-    private Long itemId;
-    private String imgUrl;
-    private String itemName;
-    private String itemDescription;
-    private Long point;
-    private LocalDateTime createdDate;
+    private final long itemId;
+    private final String imgUrl;
+    private final String itemName;
+    private final String itemDescription;
+    private final long point;
+    private final LocalDateTime createdDate;
 
     @Builder
-    public CreateItemResponseDTO(Long itemId, String imgUrl, String itemName, String itemDescription, Long point, LocalDateTime createdDate) {
+    private CreateItemResponseDTO(
+            @NonNull Long itemId,
+            @NonNull String imgUrl,
+            @NonNull String itemName,
+            @NonNull String itemDescription,
+            @NonNull Integer point,
+            @NonNull LocalDateTime createdDate) {
         this.itemId = itemId;
         this.imgUrl = imgUrl;
         this.itemName = itemName;

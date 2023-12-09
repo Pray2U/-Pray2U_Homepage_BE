@@ -2,11 +2,8 @@ package com.pray2you.p2uhomepage.domain.order.entity;
 
 import com.pray2you.p2uhomepage.domain.item.entity.Item;
 import com.pray2you.p2uhomepage.domain.user.entity.User;
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,15 +33,20 @@ public class Order extends BaseTimeEntity {
     @Column(nullable = false)
     private boolean useStatus;
 
-    @Column
-    private String targetUser;
-
     @Builder
-    public Order(User user, Item item, LocalDateTime useDate, boolean useStatus, String targetUser) {
+    private Order(
+            @NonNull User user,
+            @NonNull Item item,
+            LocalDateTime useDate,
+            @NonNull Boolean useStatus) {
         this.user = user;
         this.item = item;
         this.useDate = useDate;
         this.useStatus = useStatus;
-        this.targetUser = targetUser;
+    }
+
+    public void acceptOrder() {
+        useStatus = true;
+        useDate = LocalDateTime.now();
     }
 }

@@ -1,4 +1,4 @@
-package com.pray2you.p2uhomepage.domain.model;
+package com.pray2you.p2uhomepage.global.config;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

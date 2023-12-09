@@ -12,10 +12,10 @@ public class RefreshToken {
     @Id
     private String id;
 
-    private String refreshToken;
+    private String token;
 
-    public RefreshToken(String id, String refreshToken) {
+    public RefreshToken(String id, String token) {
         this.id = id;
-        this.refreshToken = refreshToken;
+        this.token = token;
     }
 }

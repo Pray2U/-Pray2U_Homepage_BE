@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ReadAttendanceResponseDTO {
-    private Long attendanceId;
-    private LocalDateTime createDate;
+    private final long attendanceId;
+    private final LocalDateTime createDate;
 
-    public ReadAttendanceResponseDTO(Long attendanceId, LocalDateTime createDate) {
+    public ReadAttendanceResponseDTO(long attendanceId, LocalDateTime createDate) {
         this.attendanceId = attendanceId;
         this.createDate = createDate;
     }

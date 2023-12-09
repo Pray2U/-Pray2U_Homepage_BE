@@ -1,7 +1,7 @@
 package com.pray2you.p2uhomepage.domain.memberapproval.entity;
 
-import com.pray2you.p2uhomepage.domain.model.ApprovalStatus;
-import com.pray2you.p2uhomepage.domain.model.BaseTimeEntity;
+import com.pray2you.p2uhomepage.domain.memberapproval.enumeration.ApprovalStatus;
+import com.pray2you.p2uhomepage.global.config.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

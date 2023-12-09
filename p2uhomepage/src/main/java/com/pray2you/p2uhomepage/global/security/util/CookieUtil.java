@@ -10,6 +10,11 @@ import java.util.Base64;
 import java.util.Optional;
 
 public class CookieUtil {
+
+    private CookieUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
