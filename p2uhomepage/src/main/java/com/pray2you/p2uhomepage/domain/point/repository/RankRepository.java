@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface RankRepository extends JpaRepository<Rank, Long> {
     Optional<Rank> findByUser(User user);
 
-    Optional<Rank> findByUserAndStartDateGreaterThanEqualAndEndDateLessThanEqual(User user, LocalDateTime previousWeek, LocalDateTime previousWeek2);
-    Page<Rank> findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(Pageable pageable, LocalDateTime previousWeek, LocalDateTime previousWeek2);
+    Optional<Rank> findByUserAndStartDateLessThanEqualAndEndDateGreaterThanEqual(User user, LocalDateTime previousWeek, LocalDateTime previousWeek2);
+    Page<Rank> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(Pageable pageable, LocalDateTime previousWeek, LocalDateTime previousWeek2);
 
 }

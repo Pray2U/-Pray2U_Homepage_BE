@@ -71,9 +71,14 @@ public class UserService {
         return ReadUserInfoResponseDTO.toDTO(user);
     }
 
-    public Page<AllUserInfoResponseDTO> readAllUser(Pageable pageable) {
+    public ReadMemberInfoResponseDTO readMember(Long userId) {
+        User user = findUser(userId);
+        return ReadMemberInfoResponseDTO.toDTO(user);
+    }
+
+    public Page<ReadMemberInfoResponseDTO> readAllUser(Pageable pageable) {
         Page<User> users = userRepository.findByDeleted(pageable, false);
-        return users.map(AllUserInfoResponseDTO::toDTO);
+        return users.map(ReadMemberInfoResponseDTO::toDTO);
     }
 
     public UpdateRoleResponseDTO updateRole(long userId, UpdateUserRoleRequestDTO requestDTO) {

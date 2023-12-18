@@ -9,7 +9,7 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 
 @Getter
-public class AllUserInfoResponseDTO {
+public class ReadMemberInfoResponseDTO {
     private final Long userId;
     private final String githubId;
     private final String username;
@@ -19,7 +19,7 @@ public class AllUserInfoResponseDTO {
     private final LocalDateTime createdDate;
 
     @Builder
-    private AllUserInfoResponseDTO(
+    private ReadMemberInfoResponseDTO(
             @NonNull Long userId,
             @NonNull String githubId,
             @NonNull String username,
@@ -36,7 +36,7 @@ public class AllUserInfoResponseDTO {
         this.createdDate = createdDate;
     }
 
-    public static AllUserInfoResponseDTO toDTO(User user){
+    public static ReadMemberInfoResponseDTO toDTO(User user){
         return builder()
                 .userId(user.getId())
                 .githubId(user.getGithubId())

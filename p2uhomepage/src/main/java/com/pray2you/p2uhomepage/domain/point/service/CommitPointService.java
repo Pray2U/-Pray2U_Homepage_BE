@@ -59,10 +59,10 @@ public class CommitPointService {
 
             LocalDateTime thisMonday = LocalDateTime.now().with(DayOfWeek.MONDAY).with(LocalTime.MIN);
             List<DetailPoint> commitPoints = detailPointRepository.findAllByUserAndContentAndCreateDateBetween(user, PointContent.COMMIT, thisMonday, thisMonday.plusDays(7));
-
+            log.info("포인트 사이즈: "+ commitPoints.size());
             if (commitPoints.size() > 2) {
                 log.warn("커밋 포인트 횟수 제한으로 인해 포인트가 증가하지 않습니다.");
-                throw new RestApiException(UserErrorCode.COMMIT_RESTRICT_EXCEPTION);
+                return;
             }
             saveCommitPoint(user);
         }

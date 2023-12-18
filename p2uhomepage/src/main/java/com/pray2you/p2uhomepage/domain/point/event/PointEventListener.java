@@ -55,10 +55,11 @@ public class PointEventListener {
     private void addRankPoint(PointEvent event){
         User user = event.getUser();
 
-        Rank rank = rankRepository.findByUserAndStartDateGreaterThanEqualAndEndDateLessThanEqual(user, LocalDateTime.now(), LocalDateTime.now())
+        Rank rank = rankRepository.findByUserAndStartDateLessThanEqualAndEndDateGreaterThanEqual(user, LocalDateTime.now(), LocalDateTime.now())
                 .orElse(null);
 
         if(rank == null) {
+            log.warn(user.getUsername() + "해당 랭크 정보가 없습니다.");
             return;
         }
 

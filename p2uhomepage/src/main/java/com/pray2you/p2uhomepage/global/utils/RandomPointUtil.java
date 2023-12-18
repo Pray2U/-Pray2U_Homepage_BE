@@ -7,6 +7,6 @@ public class RandomPointUtil {
         long min = pointContent.getMinPoint();
         long max = pointContent.getMaxPoint();
 
-        return (int)((Math.random() * max - min) + min);
+        return (int)((Math.random() * (max - min)) + min);
     }
 }

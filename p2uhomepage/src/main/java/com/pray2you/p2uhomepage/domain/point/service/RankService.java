@@ -64,17 +64,18 @@ public class RankService {
                 .user(user)
                 .weekPoint(0)
                 .startDate(startDate)
-                .endDate(startDate.plusDays(6))
+                .endDate(startDate.plusDays(7))
                 .build();
     }
 
     public ReadCurrentRankResponseDTO readCurrentRankPoint(long userId) {
         User user = findUser(userId);
+        LocalDateTime now = LocalDateTime.now();
 
-        Rank rank = rankRepository.findByUserAndStartDateGreaterThanEqualAndEndDateLessThanEqual(user, LocalDateTime.now(), LocalDateTime.now())
+        Rank rank = rankRepository.findByUserAndStartDateLessThanEqualAndEndDateGreaterThanEqual(user, now, now)
                 .orElseThrow(()-> new RestApiException(UserErrorCode.NOT_EXIST_RANK_EXCEPTION));
 
-        return ReadCurrentRankResponseDTO.toDTO(rank);
+        return ReadCurrentRankResponseDTO.toDTO(user, rank);
     }
 
     public ReadRankResponseDTO readPreviousWeekRank(long userId) {
@@ -82,19 +83,19 @@ public class RankService {
 
         LocalDateTime previousWeek = LocalDateTime.now().minusWeeks(1);
 
-        Rank rank = rankRepository.findByUserAndStartDateGreaterThanEqualAndEndDateLessThanEqual(user, previousWeek, previousWeek)
+        Rank rank = rankRepository.findByUserAndStartDateLessThanEqualAndEndDateGreaterThanEqual(user, previousWeek, previousWeek)
                 .orElseThrow(()-> new RestApiException(UserErrorCode.NOT_EXIST_RANK_EXCEPTION));
 
-        return ReadRankResponseDTO.toDTO(rank);
+        return ReadRankResponseDTO.toDTO(rank, user);
     }
 
     public Page<ReadRankResponseDTO> readAllPreviousWeekRank(Pageable pageable) {
 
         LocalDateTime previousWeek = LocalDateTime.now().minusWeeks(1);
 
-        Page<Rank> rankPage = rankRepository.findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(pageable, previousWeek, previousWeek);
+        Page<Rank> rankPage = rankRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(pageable, previousWeek, previousWeek);
 
-        return rankPage.map(ReadRankResponseDTO::toDTO);
+        return rankPage.map(rank -> ReadRankResponseDTO.toDTO(rank , rank.getUser()));
     }
 
     public User findUser(long userId) {

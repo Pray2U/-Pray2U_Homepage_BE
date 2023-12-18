@@ -73,9 +73,18 @@ public class UserController {
 
     @GetMapping("api/users")
     public ResponseEntity<Map<String, Object>> readAllUser(Pageable pageable) {
-        Page<AllUserInfoResponseDTO> responseDTO = userService.readAllUser(pageable);
+        Page<ReadMemberInfoResponseDTO> responseDTO = userService.readAllUser(pageable);
         Map<String, Object> result = new HashMap<>();
         result.put("msg", "전체 유저 조회가 완료되었습니다.");
+        result.put("data", responseDTO);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("api/users/{userId}")
+    public ResponseEntity<Map<String, Object>> readMember(@PathVariable(value = "userId") long userId) {
+        ReadMemberInfoResponseDTO responseDTO = userService.readMember(userId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("msg", "유저 조회가 완료되었습니다.");
         result.put("data", responseDTO);
         return ResponseEntity.ok().body(result);
     }
